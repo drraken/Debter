@@ -1,0 +1,8 @@
+/* Variables and mixins */
+* {
+  box-sizing: border-box; }
+
+h1 {
+  color: blue; }
+
+/* Main styles */
