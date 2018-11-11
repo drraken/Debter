@@ -1,8 +1,76 @@
 /* Variables and mixins */
+@font-face {
+  font-family: 'Roboto';
+  src: url("../fonts/roboto/Roboto-Regular.ttf"); }
+
 * {
+  font-family: Roboto, sans-serif;
   box-sizing: border-box; }
 
-h1 {
-  color: pink; }
+#login_page {
+  height: 100%; }
+  #login_page #login_form {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+    #login_page #login_form h3 {
+      margin-bottom: 25px; }
+    #login_page #login_form span {
+      font-size: 20px; }
+    #login_page #login_form input {
+      display: block;
+      padding: 6px;
+      width: 250px;
+      margin-bottom: 10px;
+      border: 1px solid black; }
+    #login_page #login_form #submit_box {
+      margin-top: 20px;
+      cursor: pointer; }
 
-/* Main styles */
+#debt_page ul {
+  width: 100%; }
+  #debt_page ul li {
+    display: inline-block;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 23px; }
+  #debt_page ul li:hover {
+    color: blue; }
+  #debt_page ul #logout_button {
+    float: right; }
+
+#add_page {
+  border: solid 2px black;
+  width: 300px;
+  height: 400px; }
+  #add_page span {
+    float: right;
+    cursor: pointer;
+    padding: 5px;
+    margin-top: 10px; }
+  #add_page span:hover {
+    color: red; }
+  #add_page form {
+    left: 50%;
+    margin-top: 60px; }
+    #add_page form span {
+      float: inherit; }
+    #add_page form select {
+      display: block;
+      width: 150px;
+      margin-bottom: 20px; }
+    #add_page form input {
+      display: block;
+      width: 150px;
+      margin-bottom: 10px; }
+
+.container {
+  height: 100%;
+  display: none; }
+
+.is-open {
+  display: block; }
+
+.is-close {
+  display: none; }

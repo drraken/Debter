@@ -11,13 +11,52 @@
 
 <body>
     <header>
-        <h1>Layout level</h1>
-        <div id="custom-content">
-            <h2>Page level 222 </h2>
-        </div>
     </header>
-    <main></main>
-    <footer></footer>
+    <main>
+        <div id='login_page'>
+            <form id='login_form'>
+                <h3>Debter Assistant</h3>
+                <span>Login:</span>
+                <input type="text" placeholder="Login" id='login_box'>
+                <span>Password:</span>
+                <input type="password" placeholder="Password" id='password_box'>
+                <input type="submit" id='submit_box' value='Log In'>
+            </form>
+        </div>
+        <div class='container' id='debt_page'>
+            <ul>
+                <li>Debts</li>
+                <li id='add_button'>Add</li>
+                <li id='logout_button'>Log Out</li>
+            </ul>
+        </div>
+        <div class='container' id='add_page'>
+           <span id='exit_add'>X</span>
+            <form>
+                <span>Who</span>
+                <select name="Who">
+                  <option value="Arek">Arek</option>
+                  <option value="Kuba">Kuba</option>
+                  <option value="Krzychu">Krzychu</option>
+                  <option value="Wojtek">Wojtek</option>
+                  <option value="Daniel">Daniel</option>
+                </select>
+                <span>For Whom</span>
+                <select name="For Whom">
+                 <option value="Arek">Arek</option>
+                  <option value="Kuba">Kuba</option>
+                  <option value="Krzychu">Krzychu</option>
+                  <option value="Wojtek">Wojtek</option>
+                  <option value="Daniel">Daniel</option>
+                </select>
+                <span>How much?</span>
+                <input type="text">
+                <input type="submit" value="Add">
+            </form>
+        </div>
+    </main>
+    <footer>
+    </footer>
     <script src="./js/main.js"></script>
 </body>
 
