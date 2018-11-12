@@ -30,23 +30,202 @@
       cursor: pointer;
       background-color: chartreuse; }
 
-#debt_page ul {
+#debt_page #header {
+  margin-top: 0;
   padding: 0px;
   width: 100%; }
-  #debt_page ul li {
+  #debt_page #header li {
     display: inline-block;
     padding: 5px;
     cursor: pointer;
     font-size: 27px; }
-  #debt_page ul li:hover {
+  #debt_page #header li:hover {
     color: blue; }
-  #debt_page ul #logout_button {
+  #debt_page #header #logout_button {
     float: right; }
 
+#debt_page span {
+  float: right;
+  margin-right: 30px; }
+
+#debt_page .transition,
+#debt_page p,
+#debt_page ul li i:before,
+#debt_page ul li i:after {
+  transition: all 0.25s ease-in-out; }
+
+#debt_page .flipIn,
+#debt_page h1,
+#debt_page ul li {
+  animation: flipdown 0.5s ease both; }
+
+#debt_page .no-select,
+#debt_page h2 {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+#debt_page html {
+  width: 100%;
+  height: 100%;
+  perspective: 900;
+  overflow-y: scroll;
+  background-color: #dce7eb;
+  font-family: "Titillium Web", sans-serif;
+  color: rgba(48, 69, 92, 0.8); }
+
+#debt_page body {
+  min-height: 0;
+  display: inline-block;
+  position: relative;
+  left: 50%;
+  margin: 90px 0;
+  transform: translate(-50%, 0);
+  box-shadow: 0 10px 0 0 black inset;
+  background-color: #fefffa;
+  max-width: 450px;
+  padding: 30px; }
+
+@media (max-width: 550px) {
+  #debt_page body {
+    box-sizing: border-box;
+    transform: translate(0, 0);
+    max-width: 100%;
+    min-height: 100%;
+    margin: 0;
+    left: 0; } }
+
+#debt_page h1,
+#debt_page h2 {
+  color: black; }
+
+#debt_page h1 {
+  text-transform: uppercase;
+  font-size: 36px;
+  line-height: 42px;
+  letter-spacing: 3px;
+  font-weight: 100; }
+
+#debt_page h2 {
+  font-size: 26px;
+  line-height: 34px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  display: block;
+  background-color: #fefffa;
+  margin: 0;
+  cursor: pointer; }
+
+#debt_page p {
+  color: black;
+  font-size: 17px;
+  line-height: 26px;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  max-height: 800px;
+  opacity: 1;
+  transform: translate(0, 0);
+  margin-top: 14px;
+  z-index: 2; }
+
+#debt_page ul {
+  list-style: none;
+  perspective: 900;
+  padding: 0;
+  margin: 0;
+  margin-top: 20px; }
+
+#debt_page ul li {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  padding-bottom: 4px;
+  padding-top: 18px;
+  border-top: 1px dotted #dce7eb; }
+
+#debt_page ul li:nth-of-type(1) {
+  animation-delay: 0.5s; }
+
+#debt_page ul li:nth-of-type(2) {
+  animation-delay: 0.75s; }
+
+#debt_page ul li:nth-of-type(3) {
+  animation-delay: 1s; }
+
+#debt_page ul li:last-of-type {
+  padding-bottom: 0; }
+
+#debt_page ul li i {
+  position: absolute;
+  transform: translate(-6px, 0);
+  margin-top: 16px;
+  right: 0; }
+
+#debt_page ul li i:before,
+#debt_page ul li i:after {
+  content: "";
+  position: absolute;
+  background-color: black;
+  width: 3px;
+  height: 9px; }
+
+#debt_page ul li i:before {
+  transform: translate(-2px, 0) rotate(45deg); }
+
+#debt_page ul li i:after {
+  transform: translate(2px, 0) rotate(-45deg); }
+
+#debt_page ul li input[type=checkbox] {
+  position: absolute;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0; }
+
+#debt_page ul li input[type=checkbox]:checked ~ p {
+  margin-top: 0;
+  max-height: 0;
+  opacity: 0;
+  transform: translate(0, 50%); }
+
+#debt_page ul li input[type=checkbox]:checked ~ i:before {
+  transform: translate(2px, 0) rotate(45deg); }
+
+#debt_page ul li input[type=checkbox]:checked ~ i:after {
+  transform: translate(-2px, 0) rotate(-45deg); }
+
+@keyframes flipdown {
+  0% {
+    opacity: 0;
+    transform-origin: top center;
+    transform: rotateX(-90deg); }
+  5% {
+    opacity: 1; }
+  80% {
+    transform: rotateX(8deg); }
+  83% {
+    transform: rotateX(6deg); }
+  92% {
+    transform: rotateX(-3deg); }
+  100% {
+    transform-origin: top center;
+    transform: rotateX(0deg); } }
+
 #add_page {
+  position: absolute;
   border: solid 2px black;
-  width: 300px;
-  height: 440px; }
+  width: 320px;
+  height: 440px;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white; }
   #add_page span {
     float: right;
     cursor: pointer;
@@ -62,14 +241,14 @@
       float: inherit; }
     #add_page form select {
       display: block;
-      width: 250px;
+      width: 270px;
       margin-bottom: 20px;
       padding: 8px;
       font-size: 20px; }
     #add_page form input {
       padding: 6px;
       display: block;
-      width: 250px;
+      width: 270px;
       margin-bottom: 30px; }
 
 .container {
