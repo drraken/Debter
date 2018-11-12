@@ -30,11 +30,11 @@ add_button.addEventListener('click', (e) => {
             e.preventDefault();           
             console.log('add_button is working fine');            
             add_page.classList.add("is-open");
-            //delete token
+            
         })
 exit_add.addEventListener('click', (e) => {
             e.preventDefault();           
             console.log('exit_add is working fine');            
             add_page.classList.remove("is-open");
-            //delete token
+           
         })
