@@ -1,5 +1,5 @@
-# website-redesign
-Engineering project - http://czerwonak.pl/
+# debter
+Aplication to track your debts
 
 ## Installation
 - clone repository
