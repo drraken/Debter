@@ -7,6 +7,7 @@
     <title>Debter</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/main.css">
+    <link rel="shortcut icon" type="image/ico" href="img/favicon.ico"/>
 </head>
 
 <body>
@@ -69,25 +70,27 @@
         <div class='container' id='add_page'>
             <span id='exit_add'>X</span>
             <form>
-                <span>Who</span>
-                <select name="Who">
-                  <option value="Arek">Arek</option>
-                  <option value="Kuba">Kuba</option>
-                  <option value="Krzychu">Krzychu</option>
-                  <option value="Wojtek">Wojtek</option>
-                  <option value="Daniel">Daniel</option>
+                <span>Debter</span>
+                <select id='debtor' name="debter">
+                  <option value="arek">Arek</option>
+                  <option value="kuba">Kuba</option>
+                  <option value="krzychu">Krzychu</option>
+                  <option value="wojtek">Wojtek</option>
+                  <option value="daniel">Daniel</option>
                 </select>
-                <span>For Whom</span>
-                <select name="For Whom">
-                 <option value="Arek">Arek</option>
-                  <option value="Kuba">Kuba</option>
-                  <option value="Krzychu">Krzychu</option>
-                  <option value="Wojtek">Wojtek</option>
-                  <option value="Daniel">Daniel</option>
+                <span>Lendor</span>
+                <select id='lendor' name="lendor">
+                 <option value="arek">Arek</option>
+                  <option value="kuba">Kuba</option>
+                  <option value="krzychu">Krzychu</option>
+                  <option value="wojtek">Wojtek</option>
+                  <option value="daniel">Daniel</option>
                 </select>
                 <span>How much?</span>
-                <input type="number" pattern="[a-zA-Z0-9]+" novalidate>
-                <input type="submit" value="Add">
+                <input id='amount' type="number" pattern="[a-zA-Z0-9]+" novalidate>
+                <span>Description</span>
+                <input id='description' type="text">
+                <input id="add-debt" type="submit" value="Add">
             </form>
         </div>
     </main>

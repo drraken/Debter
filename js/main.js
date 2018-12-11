@@ -5,7 +5,7 @@ let add_page = document.getElementById('add_page');
 let add_button = document.getElementById('add_button');
 let logout_button = document.getElementById('logout_button');
 let exit_add = document.getElementById('exit_add');
-
+let add_debt = document.getElementById('add-debt');
 
 logout_button.addEventListener('click', (e) => {
     e.preventDefault();
@@ -23,10 +23,25 @@ exit_add.addEventListener('click', (e) => {
     add_page.classList.remove("is-open");
 
 })
-let sessionVar = sessionStorage.getItem('login');
-if (sessionVar == 'true') {
-
-}
+add_debt.addEventListener('click',(e)=> {
+    e.preventDefault();
+    let debtor = document.getElementById('debtor').value;
+    let lendor = document.getElementById('lendor').value;
+    let amount = document.getElementById('amount').value;
+    let desc = document.getElementById('description').value;    
+    var validation = sessionStorage.getItem('key');
+    if(validation == '123'){
+    addSomeNewData(debtor,lendor,amount,desc);
+    add_page.classList.remove('is-open');
+        console.log('validation granted');
+    }
+})
+submit_button.addEventListener('click', (e) => {
+    e.preventDefault();
+    let login = document.getElementById('login_box').value;
+    let password = document.getElementById('password_box').value;
+    CheckTheData(login, password);
+})
 
 function CheckTheData(l,p) {
 
@@ -36,11 +51,10 @@ function CheckTheData(l,p) {
             .then(data => sendData(JSON.parse(data.query), l, p));
             
     };
-//funkcja sprawdzajaca czy dane zgadzaja sie ze soba
+//checking if all parameters are correct
 function sendData(data, l, p) {
     let valid = false;
-    data.forEach(element => {      
-        console.log(element,l,p);
+    data.forEach(element => {           
         if (element.Login == l && element.Password == p) {           
             valid = true;
             key_value = element.key;
@@ -57,12 +71,32 @@ function sendData(data, l, p) {
         alert('Wrong login data!');
     }
 }
-submit_button.addEventListener('click', (e) => {
-    e.preventDefault();
-    let login = document.getElementById('login_box').value;
-    let password = document.getElementById('password_box').value;
-    CheckTheData(login, password);
-})
+//adding new debts to database
+function addSomeNewData(debtor_val, lender_val, amount_val,desc_val) {
+
+    const Debt = {
+        debtor: debtor_val,
+        lender: lender_val,
+        amount: amount_val,
+        desc: desc_val,
+    }
+
+    console.log(Debt);
+
+    fetch('https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myPostLambda', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Debt)
+        })
+        .then(response => {
+            return response.json()
+        })
+        .then(data => console.log(data));
+    
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
