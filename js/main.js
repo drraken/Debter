@@ -124,8 +124,7 @@ function addSomeNewData(debtor_val, lender_val, amount_val,desc_val) {
         })
         .then(response => {
             return response.json()
-        })
-        .then(data => console.log(data))
+        })        
         .then(window.location.reload());
         
         
