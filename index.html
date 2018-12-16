@@ -27,9 +27,8 @@
         </div>
         <!--         DEBTS SECTION  -->
         <div class='container' id='debt_page'>
-            <ul id='header'>
-                <li>Debts</li>
-                <li id='add_button'>Add</li>
+            <ul id='header'>                
+                <li id='add_button'>Add debt</li>
                 <li id='logout_button'>Log Out</li>
             </ul>
             <ul>
@@ -37,7 +36,7 @@
                     <input type="checkbox" checked>
                     <i></i>
                     <h2>Arek </h2>
-                    <p>Tutaj render dynamiczny z bazy</p>                    
+                    <p>Wojtek <span id='arek_wojtek' >0</span><br> Kuba<span id='arek_kuba'>0</span><br> Krzychu<span id='arek_krzychu'>0</span><br> Daniel<span id='arek_daniel'>0</span></p>                   
                 </li>
                 <li>
                     <input type="checkbox" checked>
@@ -70,7 +69,7 @@
         <div class='container' id='add_page'>
             <span id='exit_add'>X</span>
             <form>
-                <span>Debter</span>
+                <span>Debtor</span>
                 <select id='debtor' name="debter">
                   <option value="arek">Arek</option>
                   <option value="kuba">Kuba</option>
