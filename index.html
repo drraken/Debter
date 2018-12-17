@@ -5,95 +5,168 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Debter</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="./css/main.css">
-    <link rel="shortcut icon" type="image/ico" href="img/favicon.ico"/>
+    <link rel="shortcut icon" type="image/ico" href="img/favicon.ico" />
 </head>
 
 <body>
     <header>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">Debter</a>
+                <div class="user-section">
+                    <p>Hello, <span id=logged-user>Test User</span> </p>
+                    <a href="#" class="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
     </header>
     <main>
-        <!--         LOGIN SECTION-->
         <div id='login_page'>
+            <h1> Please, login into your account</h1>
             <form id='login_form'>
-                <h3>Debter Assistant</h3>
-                <span>Login:</span>
                 <input type="text" placeholder="Login" id='login_box'>
-                <span>Password:</span>
                 <input type="password" placeholder="Password" id='password_box'>
                 <input type="submit" id='submit_box' value='Log In'>
             </form>
         </div>
-        <!--         DEBTS SECTION  -->
-        <div class='container' id='debt_page'>
-            <ul id='header'>                
-                <li id='add_button'>Add debt</li>
-                <li id='logout_button'>Log Out</li>
-            </ul>
-            <ul>
+
+        <div id="home-page" class="page is-active">
+            <div class="balance-summary">
+                <h1> Your balance is <span class="balance"><span>0.00</span>$</span></h1>
+                <div class="personal-debts">
+                    <div class="message">
+                        <p> Oops, you owe some money...</p>
+                    </div>
+                    <div class="debts-list-placeholder">
+                        <ul>
+                            <li>
+                                <div>
+                                    <div class='user-container'>
+                                        <h2>User 1</h2>
+                                        <p class="balance"><span>1.00</span>$</p>
+                                    </div>
+                                    <div class='button-container'>
+                                        <a class="button">Clear</a>
+                                        <a class="button">Clear All</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <div class='user-container'>
+                                        <h2>User 2</h2>
+                                        <p class="balance"><span>2.00</span>$</p>
+                                    </div>
+                                    <div class='button-container'>
+                                        <a class="button">Clear</a>
+                                        <a class="button">Clear All</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id='add-debt' class="is-close">
+                <span id='exit_add'>X</span>
+                <form>
+                    <span>Debtor</span>
+                    <select id='debtor' name="debter">
+                        <option value="arek">Arek</option>
+                        <option value="kuba">Kuba</option>
+                        <option value="krzychu">Krzychu</option>
+                        <option value="wojtek">Wojtek</option>
+                        <option value="daniel">Daniel</option>
+                    </select>
+                    <span>Lendor</span>
+                    <select id='lendor' name="lendor">
+                        <option value="arek">Arek</option>
+                        <option value="kuba">Kuba</option>
+                        <option value="krzychu">Krzychu</option>
+                        <option value="wojtek">Wojtek</option>
+                        <option value="daniel">Daniel</option>
+                    </select>
+                    <span>How much?</span>
+                    <input id='amount' type="number" pattern="[a-zA-Z0-9]+" novalidate>
+                    <span>Description</span>
+                    <input id='description' type="text">
+                    <input id="add-debt" type="submit" value="Add">
+                </form>
+            </div>
+            <div class='add-button-container'>
+                <a class="add-button"> + </a>
+            </div>
+        </div>
+
+        <div id='debt-page' class="page">
+            <h1> Debt list: </h1>
+            <ul id="debt-list">
                 <li>
-                    <input type="checkbox" checked>
-                    <i></i>
-                    <h2>Arek </h2>
-                    <p>Wojtek <span id='arek_wojtek' >0</span><br> Kuba<span id='arek_kuba'>0</span><br> Krzychu<span id='arek_krzychu'>0</span><br> Daniel<span id='arek_daniel'>0</span></p>                   
+                    <div class='accordion-header'>
+                        <p>Test user <span class="balance positive"> 2.00$</span></p>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p> Details: </p>
+                        <ul class='inner-list'>
+                            <li>
+                                <div>
+                                    <p> User 1 </p>
+                                    <p class="balance"><span>0.00</span>$</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <p> User 2 </p>
+                                    <p class="balance negative"> <span>-2.10</span>$</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <p> User 3 </p>
+                                    <p class="balance positive"> <span>1.03</span>$</p>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
                 </li>
                 <li>
-                    <input type="checkbox" checked>
-                    <i></i>
-                     <h2>Kuba </h2>
-                    <p>Wojtek <span id='kuba_wojtek' >0</span><br> Arek<span id='kuba_arek'>0</span><br> Krzychu<span id='kuba_krzychu'>0</span><br> Daniel<span id='kuba_daniel'>0</span></p> 
-                </li>
-                <li>
-                    <input type="checkbox" checked>
-                    <i></i>
-                    <h2>Krzychu</h2>
-                   <p>Wojtek <span id='krzychu_wojtek'>0</span><br> Kuba<span id='krzychu_kuba'>0</span><br> Arek<span id='krzychu_arek'>0</span><br> Daniel<span id='krzychu_daniel'>0</span></p>  
-                </li>
-                 <li>
-                    <input type="checkbox" checked>
-                    <i></i>
-                    <h2>Wojtek</h2>
-                   <p>Arek <span id='wojtek_arek'>0</span><br> Kuba<span id='wojtek_kuba'>0</span><br> Krzychu<span id='wojtek_krzychu'>0</span><br> Daniel<span id='wojtek_daniel'>0</span></p>   
-                </li>
-                 <li>
-                    <input type="checkbox" checked>
-                    <i></i>
-                    <h2>Daniel </h2>
-                   <p>Wojtek <span id='daniel_wojtek'>0</span><br> Kuba<span id='daniel_kuba'>0</span><br> Krzychu<span id='daniel_krzychu'>0</span><br>Arek<span id='daniel_arek'>0</span></p> 
+                    <div class='accordion-header'>
+                        <p> Test user<span class="balance negative"> -3.17$</span></p>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                    </div>
                 </li>
             </ul>
         </div>
 
-        <!--         ADD SECTION-->
-        <div class='container' id='add_page'>
-            <span id='exit_add'>X</span>
-            <form>
-                <span>Debtor</span>
-                <select id='debtor' name="debter">
-                  <option value="arek">Arek</option>
-                  <option value="kuba">Kuba</option>
-                  <option value="krzychu">Krzychu</option>
-                  <option value="wojtek">Wojtek</option>
-                  <option value="daniel">Daniel</option>
-                </select>
-                <span>Lendor</span>
-                <select id='lendor' name="lendor">
-                 <option value="arek">Arek</option>
-                  <option value="kuba">Kuba</option>
-                  <option value="krzychu">Krzychu</option>
-                  <option value="wojtek">Wojtek</option>
-                  <option value="daniel">Daniel</option>
-                </select>
-                <span>How much?</span>
-                <input id='amount' type="number" pattern="[a-zA-Z0-9]+" novalidate>
-                <span>Description</span>
-                <input id='description' type="text">
-                <input id="add-debt" type="submit" value="Add">
-            </form>
+        <div id="history-page" class="page">
+            <h1> Transactions: </h1>
         </div>
     </main>
     <footer>
+        <nav>
+            <div class="nav-wrapper">
+                <ul>
+                    <li class="is-active">
+                        <a href="#home-page"><i class="fas fa-home"></i>Home</a>
+                    </li>
+                    <li>
+                        <a href="#debt-page"><i class="fas fa-exchange-alt"></i>Debt list</a>
+                    </li>
+                    <li>
+                        <a href="#history-page"><i class="fas fa-file-alt"></i>History</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </footer>
     <script src="./js/main.js"></script>
 </body>

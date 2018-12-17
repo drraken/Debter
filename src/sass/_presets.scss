@@ -1,1 +1,72 @@
 /* Variables and mixins */
+
+$primaryColor : #212121;
+$secondaryColor: #616161;
+$tertiaryColor: #ccc;
+
+$successColor: #00C853;
+$failureColor: #D50000;
+
+@mixin respond-to($media) {
+    @if $media == large {
+      @media only screen and (min-width: 1024px) {
+        @content;
+      }
+    }
+}
+
+
+@font-face {
+    font-family: 'Roboto';
+    src: url("../fonts/roboto/Roboto-Regular.ttf")
+}
+
+
+* {
+    font-family: Roboto, sans-serif;
+    box-sizing: border-box;
+    color: $primaryColor;
+}
+
+body {
+    margin: 0;
+    main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+
+        .page {
+            display: none;
+            width: 100%;
+            &.is-active {
+                display: block;
+            }
+        }
+    }
+
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        max-height: 3rem;
+    }
+
+    h1{
+        font-size: 1.8rem;
+    }
+
+    a {
+        text-decoration: none;
+        color: $primaryColor;
+        &:hover {
+            color: $secondaryColor;
+            text-decoration: none;
+        }
+    
+    }
+}
+
+.is-close {
+    display: none !important;
+}
