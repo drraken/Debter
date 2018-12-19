@@ -109,6 +109,7 @@ footer {
             border: none;
             font-size: 16px;
             border-bottom: 1px solid $secondaryColor;
+            webkit-appearance: none;
             &:focus {
                 outline: none;
                 border: none;
@@ -124,6 +125,7 @@ footer {
             cursor: pointer;
             height: 40px;
             margin-top: 3.5rem;
+            webkit-appearance: none;
             &:hover {
                 box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
             }
@@ -287,6 +289,7 @@ footer {
             color:white;            
             box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
             background: #181a1c;
+            webkit-appearance: none;
             option{
                 color: white;
             }
@@ -301,10 +304,13 @@ footer {
             border:none;
             box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
             color: white;
-            background: #181a1c;            
+            background: #181a1c; 
+            webkit-appearance: none;
         }
         #submit-debt{
-                margin-top:50px;                
+                margin-top:50px;  
+                height: 40px;
+                webkit-appearance: none;
             }
     }
 }
