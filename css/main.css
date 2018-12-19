@@ -126,7 +126,7 @@ footer nav {
       border: none;
       font-size: 16px;
       border-bottom: 1px solid #616161;
-      webkit-appearance: none; }
+      -webkit-appearance: none; }
       #login-page #login_form input:focus {
         outline: none;
         border: none;
@@ -139,7 +139,7 @@ footer nav {
       cursor: pointer;
       height: 40px;
       margin-top: 3.5rem;
-      webkit-appearance: none; }
+      -webkit-appearance: none; }
       #login-page #login_form #submit_box:hover {
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
 
@@ -266,7 +266,7 @@ footer nav {
       color: white;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
       background: #181a1c;
-      webkit-appearance: none; }
+      -webkit-appearance: none; }
       #add-debt-page form select option {
         color: white; }
     #add-debt-page form input {
@@ -279,8 +279,8 @@ footer nav {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
       color: white;
       background: #181a1c;
-      webkit-appearance: none; }
+      -webkit-appearance: none; }
     #add-debt-page form #submit-debt {
       margin-top: 50px;
       height: 40px;
-      webkit-appearance: none; }
+      -webkit-appearance: none; }
