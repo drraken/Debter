@@ -3,8 +3,8 @@
 header {
     nav {
         padding: 1rem;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-        .nav-wrapper{
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        .nav-wrapper {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -38,7 +38,7 @@ header {
                     margin-right: 0.5rem;
                 }
             }
-        }   
+        }
     }
 }
 
@@ -77,25 +77,26 @@ footer {
                         color: black;
                         font-size: 1.25rem;
                     }
-                }   
+                }
             }
         }
     }
 }
+
 #login-page {
     height: 100%;
     justify-content: center;
     flex-direction: column;
     padding: 1.5rem;
     padding-top: 0;
-    @include respond-to(large){
+    @include respond-to(large) {
         padding: 0rem;
     }
     #login_form {
         margin-top: 1rem;
         padding: 0;
         padding-top: 2rem;
-        @include respond-to(large){
+        @include respond-to(large) {
             padding: 3rem;
         }
         input {
@@ -109,7 +110,7 @@ footer {
             margin-bottom: 1.5rem;
             border: none;
             font-size: 16px;
-            border-bottom: 1px solid $secondaryColor;            
+            border-bottom: 1px solid $secondaryColor;
             &:focus {
                 outline: none;
                 border: none;
@@ -117,7 +118,7 @@ footer {
             }
         }
 
-        #submit_box {    
+        #submit_box {
             -webkit-appearance: none;
             background-color: $primaryColor;
             border: 1px solid $primaryColor;
@@ -126,9 +127,9 @@ footer {
             cursor: pointer;
             height: 40px;
             margin-top: 3.5rem;
-            
+
             &:hover {
-                box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
             }
         }
     }
@@ -169,7 +170,7 @@ footer {
                     justify-content: flex-end;
                     margin-bottom: 0;
                 }
-            } 
+            }
         }
     }
     .add-button-container {
@@ -178,14 +179,14 @@ footer {
         right: 2rem;
         width: 60px;
         height: 60px;
-        background:  $primaryColor;
+        background: $primaryColor;
         border-radius: 50%;
         padding: 1.5rem;
         display: flex;
         justify-content: center;
         align-items: center;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
         .add-button {
             color: white !important;
             font-weight: normal;
@@ -204,7 +205,7 @@ footer {
         margin-top: 1rem;
         li {
             // border: 1px solid $secondaryColor;
-            box-shadow: 0 1px 1px rgba(0,0,0,0.16), 0 1px 1px rgba(0,0,0,0.23);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16), 0 1px 1px rgba(0, 0, 0, 0.23);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -220,8 +221,7 @@ footer {
             .accordion-content {
                 width: 100%;
                 border-top: 1px solid $tertiaryColor;
-                display: block;
-                // display: none;
+                display: block; // display: none;
                 padding: 0 1rem;
                 p {
                     font-weight: bold;
@@ -240,27 +240,49 @@ footer {
                                 font-weight: normal;
                                 margin: 0;
                             }
-                        } 
+                        }
                     }
                 }
             }
-            .balance.positive, .balance.positive span {
+            .balance.positive,
+            .balance.positive span {
                 color: $successColor;
-            };
-            .balance.negative, .balance.negative span {
+            }
+            ;
+            .balance.negative,
+            .balance.negative span {
                 color: $failureColor;
-            };
+            }
+            ;
         }
     }
 }
+
+#history-page {
+    .history-class {
+        margin: 0;
+        padding: 0;
+        .history-li-class {
+            display: inline-block;
+            font-size: 15px;   
+            margin-bottom: 10px;
+            p {
+                display: inherit;
+                font-weight: bold;
+                margin: 0;
+            }
+        }
+    }
+}
+
 #add-debt-page {
     position: absolute;
     border: solid 2px black;
     width: 320px;
     height: 550px;
-    top:50%;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);    
+    transform: translate(-50%, -50%);
     z-index: 999;
     background-color: #ffffff;
     span {
@@ -270,7 +292,7 @@ footer {
         margin-top: 6px;
         font-size: 25px;
         color: black;
-    }   
+    }
     form {
 
         margin-left: 17px;
@@ -281,40 +303,40 @@ footer {
 
         }
         select {
-             -webkit-appearance: none;
+            -webkit-appearance: none;
             display: block;
             width: 280px;
             margin-bottom: 10px;
             padding: 8px;
             font-size: 20px;
-            border:none;
-            color:white;            
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            border: none;
+            color: white;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
             background: #181a1c;
-           
-            option{
+
+            option {
                 color: white;
             }
 
         }
         input {
-             -webkit-appearance: none;
+            -webkit-appearance: none;
             padding: 12px;
             display: block;
             width: 280px;
             margin-bottom: 15px;
             font-size: 16px;
-            border:none;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            border: none;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
             color: white;
-            background: #181a1c; 
-           
+            background: #181a1c;
+
         }
-        #submit-debt{
-                -webkit-appearance: none;
-                margin-top:50px;  
-                height: 40px;
-                
-            }
+        #submit-debt {
+            -webkit-appearance: none;
+            margin-top: 50px;
+            height: 40px;
+
+        }
     }
 }

@@ -10,7 +10,12 @@ let home_page = document.getElementById('home-page');
 let debt_page = document.getElementById('debt-page');
 let history_page = document.getElementById('history-page');
 let footer = document.getElementById('footer');
-var stayLogIn = sessionStorage.getItem('key');
+let stayLogIn = sessionStorage.getItem('key');
+let logged_user = document.getElementById('logged-user');
+let user = sessionStorage.getItem('user');
+let history_container = document.getElementById('history-container');
+logged_user.innerHTML = user;
+
 if (stayLogIn == '123') {
     login_page.classList.add("is-close");
     header.classList.remove("is-close");
@@ -22,8 +27,7 @@ if (stayLogIn == '123') {
 
 logout_button.addEventListener('click', (e) => {
     e.preventDefault();
-    login_page.classList.remove("is-close");
-    //debt_page.classList.remove("is-close");
+    login_page.classList.remove("is-close");    
     add_debt_page.classList.add("is-close");
     header.classList.add('is-close');
     footer.classList.add('is-close');
@@ -31,6 +35,7 @@ logout_button.addEventListener('click', (e) => {
     debt_page.classList.add('is-close');
     history_page.classList.add('is-close');
     sessionStorage.removeItem('key');
+    sessionStorage.removeItem('user');
 })
 add_button.addEventListener('click', (e) => {
     e.preventDefault();
@@ -50,15 +55,14 @@ submit_debt.addEventListener('click', (e) => {
     var validation = sessionStorage.getItem('key');
     if (validation == '123') {
         addSomeNewData(debtor, lendor, amount, desc);
-        add_debt_page.classList.add('is-close');
-        console.log('validation granted');
+        add_debt_page.classList.add('is-close');        
 
 
     }
 })
 submit_box.addEventListener('click', (e) => {
     e.preventDefault();
-    let login = document.getElementById('login_box').value;
+    let login = document.getElementById('login_box').value.toLowerCase();
     let password = document.getElementById('password_box').value;
     CheckTheData(login, password);
 })
@@ -78,11 +82,12 @@ function sendData(data, l, p) {
         if (element.Login == l && element.Password == p) {
             console.log(element);
             valid = true;
-            key_value = element.key;
+            key_value = element.key;            
+            user_value = element.Login.toUpperCase();
         }
     })
     if (valid) {
-        alert('Hello ' + l);
+        alert('Hello ' + l.toUpperCase());
         login_page.classList.add("is-close");
         header.classList.remove("is-close");
         footer.classList.remove('is-close');
@@ -90,6 +95,11 @@ function sendData(data, l, p) {
         debt_page.classList.remove('is-close');
         history_page.classList.remove('is-close');
         sessionStorage.setItem('key', key_value);
+        sessionStorage.setItem('user',user_value);        
+        logged_user.innerHTML = user_value;
+        
+        
+        
 
 
     } else {
@@ -126,127 +136,44 @@ function addSomeNewData(debtor_val, lender_val, amount_val, desc_val) {
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
-/*function ShowTheDebts() {
+function ShowTheDebts() {
 
-        const url = " https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/transactionHistory";
+        const url = "https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myHistoryLambda";
         fetch(url)
             .then(response => response.json())
             .then(data => showData(JSON.parse(data.query)));
             
     };
-
-
-function showData(data) {    
-    data.forEach(element => {           
-      console.log(element);
-        if(element.debt == 'arek-wojtek'){
-           arek_wojtek.innerHTML = Number(arek_wojtek.innerHTML) - Number(element.amount); 
-           wojtek_arek.innerHTML = Number(wojtek_arek.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'arek-kuba'){
-           arek_kuba.innerHTML = Number(arek_kuba.innerHTML) - Number(element.amount); 
-           kuba_arek.innerHTML = Number(kuba_arek.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'arek-krzychu'){
-           arek_krzychu.innerHTML = Number(arek_krzychu.innerHTML) - Number(element.amount); 
-           krzychu_arek.innerHTML = Number(krzychu_arek.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'arek-daniel'){
-           arek_daniel.innerHTML = Number(arek_daniel.innerHTML) - Number(element.amount); 
-           daniel_arek.innerHTML = Number(daniel_arek.innerHTML) + Number(element.amount);
-        }
-        //////////////////
-        if(element.debt == 'kuba-wojtek'){
-           kuba_wojtek.innerHTML = Number(kuba_wojtek.innerHTML) - Number(element.amount); 
-           wojtek_kuba.innerHTML = Number(wojtek_kuba.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'kuba-arek'){
-           kuba_arek.innerHTML = Number(kuba_arek.innerHTML) - Number(element.amount); 
-           arek_kuba.innerHTML = Number(arek_kuba.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'kuba-krzychu'){
-           kuba_krzychu.innerHTML = Number(kuba_krzychu.innerHTML) - Number(element.amount); 
-           krzychu_kuba.innerHTML = Number(krzychu_kuba.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'kuba-daniel'){
-           kuba_daniel.innerHTML = Number(kuba_daniel.innerHTML) - Number(element.amount); 
-           daniel_kuba.innerHTML = Number(daniel_kuba.innerHTML) + Number(element.amount);
-        }
-        /////////////////
-         if(element.debt == 'krzychu-wojtek'){
-           krzychu_wojtek.innerHTML = Number(krzychu_wojtek.innerHTML) - Number(element.amount); 
-           wojtek_krzychu.innerHTML = Number(wojtek_krzychu.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'krzychu-arek'){
-           krzychu_arek.innerHTML = Number(krzychu_arek.innerHTML) - Number(element.amount); 
-           arek_krzychu.innerHTML = Number(arek_krzychu.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'krzychu-kuba'){
-           krzychu_kuba.innerHTML = Number(krzychu_kuba.innerHTML) - Number(element.amount); 
-           kuba_krzychu.innerHTML = Number(kuba_krzychu.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'krzychu-daniel'){
-           krzychu_daniel.innerHTML = Number(krzychu_daniel.innerHTML) - Number(element.amount); 
-           daniel_krzychu.innerHTML = Number(daniel_krzychu.innerHTML) + Number(element.amount);
-        }
-        ////////////////
-         if(element.debt == 'wojtek-kuba'){
-           wojtek_kuba.innerHTML = Number(wojtek_kuba.innerHTML) - Number(element.amount); 
-           kuba_wojtek.innerHTML = Number(kuba_wojtek.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'kuba-arek'){
-           wojtek_arek.innerHTML = Number(wojtek_arek.innerHTML) - Number(element.amount); 
-           arek_wojtek.innerHTML = Number(arek_wojtek.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'kuba-krzychu'){
-           wojtek_krzychu.innerHTML = Number(wojtek_krzychu.innerHTML) - Number(element.amount); 
-           krzychu_wojtek.innerHTML = Number(krzychu_wojtek.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'kuba-daniel'){
-           wojtek_daniel.innerHTML = Number(wojtek_daniel.innerHTML) - Number(element.amount); 
-           daniel_wojtek.innerHTML = Number(daniel_wojtek.innerHTML) + Number(element.amount);
-        }
-        /////////////
-         if(element.debt == 'daniel-wojtek'){
-           daniel_wojtek.innerHTML = Number(daniel_wojtek.innerHTML) - Number(element.amount); 
-           wojtek_daniel.innerHTML = Number(wojtek_daniel.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'daniel-arek'){
-           daniel_arek.innerHTML = Number(daniel_arek.innerHTML) - Number(element.amount); 
-           arek_daniel.innerHTML = Number(arek_daniel.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'daniel-krzychu'){
-           daniel_krzychu.innerHTML = Number(daniel_krzychu.innerHTML) - Number(element.amount); 
-           krzychu_daniel.innerHTML = Number(krzychu_daniel.innerHTML) + Number(element.amount);
-        }
-        if(element.debt == 'daniel-kuba'){
-           daniel_kuba.innerHTML = Number(daniel_kuba.innerHTML) - Number(element.amount); 
-           kuba_daniel.innerHTML = Number(kuba_daniel.innerHTML) + Number(element.amount);
-        }
-    })    
-}*/
-/*ShowTheDebts()
-//logi w ten sposób
-let data = [{
-  name: "test 1",
-  surname :"test 123"
-},{
-  name: "test 1",
-  surname : "test 123"
-}];
-
-let container = document.querySelector('#container');
-let containerMarkup = <ul>;
-
-data.forEach((e)=>{
-  containerMarkup += <li> Name: ${e.name} | Surname ${e.surname} </li> ;
+//<------HISTORY PAGE RENDERING------>
+let containerMarkup = '';
+let historyMap = [];
+function showData(data){
+data.forEach((e) => {
+    let temp = {};
+    temp.id = e.idTransaction;
+    temp.debtor = e.debtor;
+    temp.lender = e.lender;
+    temp.amount = e.amount;
+    temp.desc = e.description;
+    temp.date = e.CreationDate;
+    historyMap.push(temp);
+    console.log(temp);
+});
+containerMarkup = `<ul class='history-class'>`;
+ 
+    
+historyMap.forEach((u) => {
+  containerMarkup += `<li class='history-li-class'> <p>ID:</p> ${u.id}  <p>Debtor:</p> ${u.debtor}  <p>Lender:</p> ${u.lender}  <p>Amount:</p> ${u.amount}<br><p>Desc:</p> ${u.desc}  <p>Date:</p> ${u.date}</li>` ;
+     console.log(u);
 });
 
-containerMarkup += </ul>;
+containerMarkup += '</ul>';
+history_container.innerHTML = containerMarkup;
 console.log(containerMarkup);
-container.innerHTML = containerMarkup;
-// Navigate beetwen pages*/
+}
+ShowTheDebts();
 
+//<--------BOTTOM NAVIGATION-------->
 let bottomNavigation = document.querySelectorAll('footer nav ul li');
 let pages = document.querySelectorAll('div.page');
 

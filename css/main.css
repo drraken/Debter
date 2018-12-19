@@ -228,10 +228,24 @@ footer nav {
               #debt-page ul li .accordion-content ul li div p {
                 font-weight: normal;
                 margin: 0; }
-      #debt-page ul li .balance.positive, #debt-page ul li .balance.positive span {
+      #debt-page ul li .balance.positive,
+      #debt-page ul li .balance.positive span {
         color: #00C853; }
-      #debt-page ul li .balance.negative, #debt-page ul li .balance.negative span {
+      #debt-page ul li .balance.negative,
+      #debt-page ul li .balance.negative span {
         color: #D50000; }
+
+#history-page .history-class {
+  margin: 0;
+  padding: 0; }
+  #history-page .history-class .history-li-class {
+    display: inline-block;
+    font-size: 15px;
+    margin-bottom: 10px; }
+    #history-page .history-class .history-li-class p {
+      display: inherit;
+      font-weight: bold;
+      margin: 0; }
 
 #add-debt-page {
   position: absolute;
