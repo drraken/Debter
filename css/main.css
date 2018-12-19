@@ -116,6 +116,7 @@ footer nav {
       #login-page #login_form {
         padding: 3rem; } }
     #login-page #login_form input {
+      -webkit-appearance: none;
       display: block;
       width: 100%;
       color: #616161;
@@ -125,21 +126,20 @@ footer nav {
       margin-bottom: 1.5rem;
       border: none;
       font-size: 16px;
-      border-bottom: 1px solid #616161;
-      -webkit-appearance: none; }
+      border-bottom: 1px solid #616161; }
       #login-page #login_form input:focus {
         outline: none;
         border: none;
         border-bottom: 2px solid #212121; }
     #login-page #login_form #submit_box {
+      -webkit-appearance: none;
       background-color: #212121;
       border: 1px solid #212121;
       border-radius: 1rem;
       color: white;
       cursor: pointer;
       height: 40px;
-      margin-top: 3.5rem;
-      -webkit-appearance: none; }
+      margin-top: 3.5rem; }
       #login-page #login_form #submit_box:hover {
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
 
@@ -257,6 +257,7 @@ footer nav {
       float: inherit;
       color: black; }
     #add-debt-page form select {
+      -webkit-appearance: none;
       display: block;
       width: 280px;
       margin-bottom: 10px;
@@ -265,11 +266,11 @@ footer nav {
       border: none;
       color: white;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-      background: #181a1c;
-      -webkit-appearance: none; }
+      background: #181a1c; }
       #add-debt-page form select option {
         color: white; }
     #add-debt-page form input {
+      -webkit-appearance: none;
       padding: 12px;
       display: block;
       width: 280px;
@@ -278,9 +279,8 @@ footer nav {
       border: none;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
       color: white;
-      background: #181a1c;
-      -webkit-appearance: none; }
+      background: #181a1c; }
     #add-debt-page form #submit-debt {
+      -webkit-appearance: none;
       margin-top: 50px;
-      height: 40px;
-      -webkit-appearance: none; }
+      height: 40px; }

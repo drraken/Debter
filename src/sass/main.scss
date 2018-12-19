@@ -99,6 +99,7 @@ footer {
             padding: 3rem;
         }
         input {
+            -webkit-appearance: none;
             display: block;
             width: 100%;
             color: $secondaryColor;
@@ -108,8 +109,7 @@ footer {
             margin-bottom: 1.5rem;
             border: none;
             font-size: 16px;
-            border-bottom: 1px solid $secondaryColor;
-            -webkit-appearance: none;
+            border-bottom: 1px solid $secondaryColor;            
             &:focus {
                 outline: none;
                 border: none;
@@ -117,7 +117,8 @@ footer {
             }
         }
 
-        #submit_box {     
+        #submit_box {    
+            -webkit-appearance: none;
             background-color: $primaryColor;
             border: 1px solid $primaryColor;
             border-radius: 1rem;
@@ -125,7 +126,7 @@ footer {
             cursor: pointer;
             height: 40px;
             margin-top: 3.5rem;
-            -webkit-appearance: none;
+            
             &:hover {
                 box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
             }
@@ -280,6 +281,7 @@ footer {
 
         }
         select {
+             -webkit-appearance: none;
             display: block;
             width: 280px;
             margin-bottom: 10px;
@@ -289,13 +291,14 @@ footer {
             color:white;            
             box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
             background: #181a1c;
-            -webkit-appearance: none;
+           
             option{
                 color: white;
             }
 
         }
         input {
+             -webkit-appearance: none;
             padding: 12px;
             display: block;
             width: 280px;
@@ -305,12 +308,13 @@ footer {
             box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
             color: white;
             background: #181a1c; 
-            -webkit-appearance: none;
+           
         }
         #submit-debt{
+                -webkit-appearance: none;
                 margin-top:50px;  
                 height: 40px;
-                -webkit-appearance: none;
+                
             }
     }
 }
