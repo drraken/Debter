@@ -235,17 +235,19 @@ footer nav {
       #debt-page ul li .balance.negative span {
         color: #D50000; }
 
-#history-page .history-class {
-  margin: 0;
-  padding: 0; }
-  #history-page .history-class .history-li-class {
-    display: inline-block;
-    font-size: 15px;
-    margin-bottom: 10px; }
-    #history-page .history-class .history-li-class p {
-      display: inherit;
-      font-weight: bold;
-      margin: 0; }
+#history-page {
+  margin-bottom: 70px; }
+  #history-page .history-class {
+    margin: 0;
+    padding: 0; }
+    #history-page .history-class .history-li-class {
+      display: inline-block;
+      font-size: 15px;
+      margin-bottom: 10px; }
+      #history-page .history-class .history-li-class p {
+        display: inherit;
+        font-weight: bold;
+        margin: 0; }
 
 #add-debt-page {
   position: absolute;

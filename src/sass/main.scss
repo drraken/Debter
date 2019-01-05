@@ -259,11 +259,12 @@ footer {
 }
 
 #history-page {
+    margin-bottom: 70px;
     .history-class {
         margin: 0;
         padding: 0;
         .history-li-class {
-            display: inline-block;
+            display:inline-block;
             font-size: 15px;   
             margin-bottom: 10px;
             p {
