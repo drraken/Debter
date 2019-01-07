@@ -191,6 +191,8 @@ footer nav {
 
 #debt-page {
   width: 100%; }
+  #debt-page #debt-list {
+    margin-bottom: 50px; }
   #debt-page ul {
     list-style: none;
     margin: 0;

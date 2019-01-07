@@ -16,6 +16,7 @@ let user = sessionStorage.getItem('user');
 let history_container = document.getElementById('history-container');
 let balance = document.getElementById('balance');
 let message = document.getElementById('message');
+let homePageContainer = document.getElementById('HomePageContainer');
 logged_user.innerHTML = user;
 
 if (getKey == '123') {
@@ -29,7 +30,7 @@ if (getKey == '123') {
 
 logout_button.addEventListener('click', (e) => {
     e.preventDefault();
-    login_page.classList.remove("is-close");    
+    login_page.classList.remove("is-close");
     add_debt_page.classList.add("is-close");
     header.classList.add('is-close');
     footer.classList.add('is-close');
@@ -53,10 +54,10 @@ submit_debt.addEventListener('click', (e) => {
     let debtor = document.getElementById('debtor').value;
     let lendor = document.getElementById('lendor').value;
     let amount = document.getElementById('amount').value;
-    let desc = document.getElementById('description').value;   
+    let desc = document.getElementById('description').value;
     if (getKey == '123') {
         addSomeNewData(debtor, lendor, amount, desc);
-        add_debt_page.classList.add('is-close');        
+        add_debt_page.classList.add('is-close');
         ShowTheDebts();
 
     }
@@ -84,27 +85,27 @@ function sendData(data, l, p) {
         if (element.Login == l && element.Password == p) {
             console.log(element);
             valid = true;
-            key_value = element.key;            
-            user_value = element.Login.toUpperCase();  
-            
+            key_value = element.key;
+            user_value = element.Login.toUpperCase();
+
         }
     })
     if (valid) {
         alert('Hello ' + l.toUpperCase());
         sessionStorage.setItem('key', key_value);
-        sessionStorage.setItem('user',user_value);
+        sessionStorage.setItem('user', user_value);
         location.reload();
         login_page.classList.add("is-close");
         header.classList.remove("is-close");
         footer.classList.remove('is-close');
         home_page.classList.remove("is-close");
         debt_page.classList.remove('is-close');
-        history_page.classList.remove('is-close');                
+        history_page.classList.remove('is-close');
         logged_user.innerHTML = user_value;
-        
-        
-        
-        
+
+
+
+
 
 
     } else {
@@ -143,39 +144,39 @@ function addSomeNewData(debtor_val, lender_val, amount_val, desc_val) {
 /////////////////////////////////////////////////////////////////////////////////////////
 //<------HISTORY PAGE RENDERING------>
 function ShowTheDebts() {
-    if(getKey == '123'){
+    if (getKey == '123') {
         const url = "https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myHistoryLambda";
         fetch(url)
             .then(response => response.json())
             .then(data => showData(JSON.parse(data.query)));
-    }
-    else{
+    } else {
         history_container.innerHTML = "YOU ARE NOT ALLOWED TO SEE THIS CONTENT";
     }
-    };
+};
 
 let containerMarkup = '';
 let historyMap = [];
-function showData(data){
-data.forEach((e) => {
-    let temp = {};
-    temp.id = e.idTransaction;
-    temp.debtor = e.debtor;
-    temp.lender = e.lender;
-    temp.amount = e.amount;
-    temp.desc = e.description;
-    temp.date = e.CreationDate;
-    historyMap.push(temp);   
-});
-containerMarkup = `<ul class='history-class'>`;
- 
-    
-historyMap.forEach((u) => {
-  containerMarkup += `<li class='history-li-class'> <p>ID:</p> ${u.id}  <p>Debtor:</p> ${u.debtor}  <p>Lender:</p> ${u.lender}  <p>Amount:</p> ${u.amount}<p>Desc:</p> ${u.desc}  <p>Date:</p> ${u.date}</li><br>` ;     
-});
 
-containerMarkup += '</ul>';
-history_container.innerHTML = containerMarkup;
+function showData(data) {
+    data.forEach((e) => {
+        let temp = {};
+        temp.id = e.idTransaction;
+        temp.debtor = e.debtor;
+        temp.lender = e.lender;
+        temp.amount = e.amount;
+        temp.desc = e.description;
+        temp.date = e.CreationDate;
+        historyMap.push(temp);
+    });
+    containerMarkup = `<ul class='history-class'>`;
+
+
+    historyMap.forEach((u) => {
+        containerMarkup += `<li class='history-li-class'> <p>ID:</p> ${u.id}  <p>Debtor:</p> ${u.debtor}  <p>Lender:</p> ${u.lender}  <p>Amount:</p> ${u.amount}<p>Desc:</p> ${u.desc}  <p>Date:</p> ${u.date}</li><br>`;
+    });
+
+    containerMarkup += '</ul>';
+    history_container.innerHTML = containerMarkup;
 }
 ShowTheDebts();
 
@@ -202,99 +203,213 @@ function changeNavigationState(links, activeIndex) {
 }
 
 
-// Users
 
-//This data should be fetched
-const users = ['Arek', 'Kuba', 'Krzychu', 'Wojtek', 'Daniel'];
+//<------------HOME PAGE RENDERING----------->
+function ShowTheHomePageDebt() {
+    if (getKey == '123') {
+        const url = " https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/transactionHistory";
+        fetch(url)
+            .then(response => response.json())
+            .then(data => showHomeData(JSON.parse(data.query)));
+    } else {
+        home_page.innerHTML = "YOU ARE NOT ALLOWED TO SEE THIS CONTENT";
+    }
+};
 
-const debtList = document.querySelector('#debt-list');
-let listMarkup = '';
 
-let userMap = [];
 
-users.forEach((user, index) => {
-    let temp = {};
-    temp.user = user;
-    temp.relations = users.filter((e, i) => {
-        return index != i;
+let containerHomeMarkup = '';
+let balanceMap = [];
+let homeMap = [];
+let balance_amount = 0;
+let userPersonalizedBalance = [
+        {
+            user: 'arek',
+            debts: [{
+                    name: 'wojtek',
+                    amount: 0
+        },
+                {
+                    name: 'daniel',
+                    amount: 0
+        }, {
+                    name: 'kuba',
+                    amount: 0
+        }, {
+                    name: 'krzychu',
+                    amount: 0
+        }
+                    ]
+    }, {
+            user: 'wojtek',
+            debts: [{
+                    name: 'daniel',
+                    amount: 0
+        },
+                {
+                    name: 'arek',
+                    amount: 0
+        }, {
+                    name: 'kuba',
+                    amount: 0
+        }, {
+                    name: 'krzychu',
+                    amount: 0
+        }
+                    ]
+    }, {
+            user: 'kuba',
+            debts: [{
+                    name: 'wojtek',
+                    amount: 0
+        },
+                {
+                    name: 'arek',
+                    amount: 0
+        }, {
+                    name: 'daniel',
+                    amount: 0
+        }, {
+                    name: 'krzychu',
+                    amount: 0
+        }
+                    ]
+    }, {
+            user: 'krzychu',
+            debts: [{
+                    name: 'wojtek',
+                    amount: 0
+        },
+                {
+                    name: 'arek',
+                    amount: 0
+        }, {
+                    name: 'kuba',
+                    amount: 0
+        }, {
+                    name: 'daniel',
+                    amount: 0
+        }
+                    ]
+    }, {
+            user: 'daniel',
+            debts: [{
+                    name: 'wojtek',
+                    amount: 0
+        },
+                {
+                    name: 'arek',
+                    amount: 0
+        }, {
+                    name: 'kuba',
+                    amount: 0
+        }, {
+                    name: 'krzychu',
+                    amount: 0
+        }
+                    ]
+    }]
+function showHomeData(data) {
+    data.forEach((e) => {
+        if (e.debtor == user.toLowerCase()) {
+            balance_amount -= e.amount;
+        } else if (e.lender == user.toLowerCase()) {
+            balance_amount += e.amount;
+        }
+        let temp = [];
+        let temp1 = [];
+        temp.balance_amount = balance_amount;
+        temp1.debtor = e.debtor;
+        temp1.lender = e.lender;
+        temp1.amount = e.amount;
+        balanceMap.push(temp);
+        homeMap.push(temp1);
+
     });
-    userMap.push(temp);
-});
+    var lastRowOfBalanceMap = balanceMap[balanceMap.length - 1];
+    balance.innerHTML = lastRowOfBalanceMap.balance_amount;
+    if (lastRowOfBalanceMap.balance_amount > 0) {
+        message.innerHTML = "It`s look like you lend someone yours money.."
+    }
+    if ((lastRowOfBalanceMap.balance_amount < 0)) {
+        message.innerHTML = "It`s look like you own some money..."
+    }
+    if (lastRowOfBalanceMap.balance_amount == 0) {
+        message.innerHTML = "It`s look like you gucci with money..."
+    }
+    
+   
+    userPersonalizedBalance.forEach((d) => {
+        homeMap.forEach((h) => {
+            if (h.lender == d.user) {
+                d.debts.forEach((x) => {
+                    if (x.name == h.debtor) {
+                        x.amount += h.amount;
+                    }
+                })
+            } else if (h.debtor == d.user) {
+                d.debts.forEach((x) => {
+                    if (x.name == h.lender) {
+                        x.amount -= h.amount;
+                    }
+                })
+            }
+        })
 
+    })
+    console.log(userPersonalizedBalance);
+    
+    function jsUcfirst(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    containerHomeMarkup = `<ul>`;
 
-userMap.forEach((u) => {    
-    listMarkup += `<li>
+    userPersonalizedBalance.forEach((i) => {
+        if (i.user == user.toLowerCase()) {
+            i.debts.forEach((d) => {
+                containerHomeMarkup += `<li> <div><div class = 'user-container'><h2>${jsUcfirst(d.name)}</h2><p class='balance'><span><strong>${d.amount} zł</strong></span></p> </div><div class='button-container'><a class="button">Clear</a><a class="button">Clear All</a></div></div></li>`;
+            })
+
+        }
+    });
+
+    containerHomeMarkup += '</ul>';
+    homePageContainer.innerHTML = containerHomeMarkup;
+//<------------DEBT LIST---------->
+    const debtList = document.querySelector('#debt-list');
+    let listMarkup = '';
+
+   
+    userPersonalizedBalance.forEach((u) => {
+        let debtListBalance= 0;
+        u.debts.forEach((d)=>{
+            debtListBalance += d.amount;            
+              })
+       
+        listMarkup += `<li>
                     <div class='accordion-header'>
-                        <p>${u.user}<span class="balance positive"> 0.00$</span></p>
+                        <p>${jsUcfirst(u.user)}<span class="balance positive"> ${debtListBalance}zł</span></p>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="accordion-content">
                             <p> Details: </p>
                             <ul class='inner-list'>`
-    u.relations.forEach((relation) => {
-        listMarkup += `<li>
+        u.debts.forEach((relation) => {
+            listMarkup += `<li>
                                     <div>
-                                        <p>${relation}</p>
-                                        <p class="balance"><span>0.00</span>$</p>
+                                        <p>${jsUcfirst(relation.name)}</p>
+                                        <p class="balance"><span>${relation.amount}zł</span></p>
                                     </div>
                                 </li>`
-    });
-    listMarkup += `        </ul>
+        });
+        listMarkup += `        </ul>
                         </div>
                     </li>`
-});
+       
+    });
 
-debtList.innerHTML = listMarkup;
-//<------------HOME PAGE RENDERING----------->
-function ShowTheHomePageDebt() {
-    if(getKey == '123'){
-        const url = " https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/transactionHistory";
-        fetch(url)
-            .then(response => response.json())
-            .then(data => showHomeData(JSON.parse(data.query)));
-    }
-    else{
-        home_page.innerHTML = "YOU ARE NOT ALLOWED TO SEE THIS CONTENT";
-    }
-    };
+    debtList.innerHTML = listMarkup;
 
-
-
-let containerHomeMarkup = '';
-let homeMap = [];
-let balance_amount = 0;
-function showHomeData(data){
-data.forEach((e) => {
-    if(e.debtor == user.toLowerCase()){        
-        balance_amount -= e.amount;             
-    }
-    else if(e.lender == user.toLowerCase()){
-        balance_amount += e.amount;             
-    }      
-    let temp = []; 
-    temp.balance_amount = balance_amount;      
-    homeMap.push(temp);   
-});
-var lastRowOfHomeMap = homeMap[homeMap.length - 1];
-balance.innerHTML = lastRowOfHomeMap.balance_amount;
-if(lastRowOfHomeMap.balance_amount > 0){
-    message.innerHTML = "It`s look like you lend someone yours money.."
-}
-if((lastRowOfHomeMap.balance_amount < 0)){
-    message.innerHTML = "It`s look like you own some money..."
-}
-if(lastRowOfHomeMap.balance_amount == 0){
-    message.innerHTML = "It`s look like you gucci with money..."
-}
-containerHomeMarkup = `<ul class='history-class'>`;
- 
-    
-homeMap.forEach((u) => {
-  containerHomeMarkup += `<li class='history-li-class'> <p>ID:</p> ${u.id}  <p>Debtor:</p> ${u.debtor}  <p>Lender:</p> ${u.lender}  <p>Amount:</p> ${u.amount}<p>Desc:</p> ${u.desc}  <p>Date:</p> ${u.date}</li><br>` ;     
-});
-
-containerHomeMarkup += '</ul>';
-//home_container.innerHTML = containerMarkup;
 }
 ShowTheHomePageDebt();
 
