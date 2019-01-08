@@ -214,7 +214,7 @@ footer nav {
       #debt-page ul li .accordion-content {
         width: 100%;
         border-top: 1px solid #ccc;
-        display: block;
+        display: none;
         padding: 0 1rem; }
         #debt-page ul li .accordion-content p {
           font-weight: bold; }
@@ -236,6 +236,8 @@ footer nav {
       #debt-page ul li .balance.negative,
       #debt-page ul li .balance.negative span {
         color: #D50000; }
+      #debt-page ul li .isActive {
+        display: block; }
 
 #history-page {
   margin-bottom: 70px; }

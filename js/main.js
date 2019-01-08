@@ -19,6 +19,7 @@ let message = document.getElementById('message');
 let homePageContainer = document.getElementById('HomePageContainer');
 logged_user.innerHTML = user;
 
+
 if (getKey == '123') {
     login_page.classList.add("is-close");
     header.classList.remove("is-close");
@@ -223,92 +224,93 @@ let balanceMap = [];
 let homeMap = [];
 let balance_amount = 0;
 let userPersonalizedBalance = [
-        {
-            user: 'arek',
-            debts: [{
-                    name: 'wojtek',
-                    amount: 0
+    {
+        user: 'arek',
+        debts: [{
+                name: 'wojtek',
+                amount: 0
         },
-                {
-                    name: 'daniel',
-                    amount: 0
+            {
+                name: 'daniel',
+                amount: 0
         }, {
-                    name: 'kuba',
-                    amount: 0
+                name: 'kuba',
+                amount: 0
         }, {
-                    name: 'krzychu',
-                    amount: 0
+                name: 'krzychu',
+                amount: 0
         }
                     ]
     }, {
-            user: 'wojtek',
-            debts: [{
-                    name: 'daniel',
-                    amount: 0
+        user: 'wojtek',
+        debts: [{
+                name: 'daniel',
+                amount: 0
         },
-                {
-                    name: 'arek',
-                    amount: 0
+            {
+                name: 'arek',
+                amount: 0
         }, {
-                    name: 'kuba',
-                    amount: 0
+                name: 'kuba',
+                amount: 0
         }, {
-                    name: 'krzychu',
-                    amount: 0
+                name: 'krzychu',
+                amount: 0
         }
                     ]
     }, {
-            user: 'kuba',
-            debts: [{
-                    name: 'wojtek',
-                    amount: 0
+        user: 'kuba',
+        debts: [{
+                name: 'wojtek',
+                amount: 0
         },
-                {
-                    name: 'arek',
-                    amount: 0
+            {
+                name: 'arek',
+                amount: 0
         }, {
-                    name: 'daniel',
-                    amount: 0
+                name: 'daniel',
+                amount: 0
         }, {
-                    name: 'krzychu',
-                    amount: 0
+                name: 'krzychu',
+                amount: 0
         }
                     ]
     }, {
-            user: 'krzychu',
-            debts: [{
-                    name: 'wojtek',
-                    amount: 0
+        user: 'krzychu',
+        debts: [{
+                name: 'wojtek',
+                amount: 0
         },
-                {
-                    name: 'arek',
-                    amount: 0
+            {
+                name: 'arek',
+                amount: 0
         }, {
-                    name: 'kuba',
-                    amount: 0
+                name: 'kuba',
+                amount: 0
         }, {
-                    name: 'daniel',
-                    amount: 0
+                name: 'daniel',
+                amount: 0
         }
                     ]
     }, {
-            user: 'daniel',
-            debts: [{
-                    name: 'wojtek',
-                    amount: 0
+        user: 'daniel',
+        debts: [{
+                name: 'wojtek',
+                amount: 0
         },
-                {
-                    name: 'arek',
-                    amount: 0
+            {
+                name: 'arek',
+                amount: 0
         }, {
-                    name: 'kuba',
-                    amount: 0
+                name: 'kuba',
+                amount: 0
         }, {
-                    name: 'krzychu',
-                    amount: 0
+                name: 'krzychu',
+                amount: 0
         }
                     ]
     }]
+
 function showHomeData(data) {
     data.forEach((e) => {
         if (e.debtor == user.toLowerCase()) {
@@ -337,8 +339,8 @@ function showHomeData(data) {
     if (lastRowOfBalanceMap.balance_amount == 0) {
         message.innerHTML = "It`s look like you gucci with money..."
     }
-    
-   
+
+
     userPersonalizedBalance.forEach((d) => {
         homeMap.forEach((h) => {
             if (h.lender == d.user) {
@@ -358,7 +360,7 @@ function showHomeData(data) {
 
     })
     console.log(userPersonalizedBalance);
-    
+
     function jsUcfirst(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -375,25 +377,38 @@ function showHomeData(data) {
 
     containerHomeMarkup += '</ul>';
     homePageContainer.innerHTML = containerHomeMarkup;
-//<------------DEBT LIST---------->
+    //<------------DEBT LIST---------->
     const debtList = document.querySelector('#debt-list');
     let listMarkup = '';
 
-   
+
     userPersonalizedBalance.forEach((u) => {
-        let debtListBalance= 0;
-        u.debts.forEach((d)=>{
-            debtListBalance += d.amount;            
-              })
-       
-        listMarkup += `<li>
-                    <div class='accordion-header'>
+        let debtListBalance = 0;
+        u.debts.forEach((d) => {
+            debtListBalance += d.amount;
+        })
+        if (debtListBalance >= 0) {
+            listMarkup += `<li>
+                    <div class='accordion-header' >
                         <p>${jsUcfirst(u.user)}<span class="balance positive"> ${debtListBalance}zł</span></p>
-                            <i class="fas fa-chevron-down"></i>
+                            <i id='${u.user}arrow' class="fas fa-chevron-down"></i>
                         </div>
-                        <div class="accordion-content">
+                        <div class="accordion-content" id='${u.user}'>
                             <p> Details: </p>
                             <ul class='inner-list'>`
+
+
+        } else if (debtListBalance < 0) {
+            listMarkup += `<li>
+                    <div class='accordion-header'>
+                        <p>${jsUcfirst(u.user)}<span class="balance negative"> ${debtListBalance}zł</span></p>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content" id='${u.user}Accordion'>
+                            <p> Details: </p>
+                            <ul class='inner-list'>`
+
+        }
         u.debts.forEach((relation) => {
             listMarkup += `<li>
                                     <div>
@@ -405,11 +420,19 @@ function showHomeData(data) {
         listMarkup += `        </ul>
                         </div>
                     </li>`
-       
+
     });
 
     debtList.innerHTML = listMarkup;
+    let accordionHeaders = debtList.querySelectorAll('.accordion-header');
 
+    accordionHeaders.forEach((e) => {
+        e.addEventListener('click', (event) => {           
+            e.parentNode.childNodes[3].classList.toggle("isActive");           
+            e.childNodes[3].classList.toggle("fa-chevron-up");
+          
+        })
+    });
 }
-ShowTheHomePageDebt();
 
+ShowTheHomePageDebt();

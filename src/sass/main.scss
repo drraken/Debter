@@ -223,7 +223,7 @@ footer {
             .accordion-content {
                 width: 100%;
                 border-top: 1px solid $tertiaryColor;
-                display: block; // display: none;
+                display: none; // display: none;
                 padding: 0 1rem;
                 p {
                     font-weight: bold;
@@ -256,6 +256,9 @@ footer {
                 color: $failureColor;
             }
             ;
+            .isActive{
+                display: block;
+            }
         }
     }
 }
