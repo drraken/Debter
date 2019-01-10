@@ -135,7 +135,7 @@ function addSomeNewData(debtor_val, lender_val, amount_val, desc_val) {
         .then(response => {
             return response.json()
         });
-
+        setTimeout('window.location.reload();', 200);
 
 
 
@@ -359,26 +359,64 @@ function showHomeData(data) {
         })
 
     })
-    console.log(userPersonalizedBalance);
+
 
     function jsUcfirst(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
-    containerHomeMarkup = `<ul>`;
-
+    containerHomeMarkup = `<li>`;
+    const personalDebtList = document.querySelector('#personalDebtList');    
     userPersonalizedBalance.forEach((i) => {
         if (i.user == user.toLowerCase()) {
             i.debts.forEach((d) => {
-                containerHomeMarkup += `<li> <div><div class = 'user-container'><h2>${jsUcfirst(d.name)}</h2><p class='balance'><span><strong>${d.amount} zł</strong></span></p> </div><div class='button-container'><a class="button">Clear</a><a class="button">Clear All</a></div></div></li>`;
+                containerHomeMarkup += `<div class='SingleBlockDebtContainer'><div class = 'user-container'><h2>${jsUcfirst(d.name)}</h2><p class='balance'><span><strong>${d.amount}</strong></span></p> </div><div class='button-container'><a class="button">Clear</a><a class="buttonAll">Clear All</a></div></div>`;
             })
 
         }
+
     });
 
-    containerHomeMarkup += '</ul>';
-    homePageContainer.innerHTML = containerHomeMarkup;
+    containerHomeMarkup += '</li>';
+    personalDebtList.innerHTML = containerHomeMarkup;
     //<------------DEBT LIST---------->
-    const debtList = document.querySelector('#debt-list');
+    let buttonContainer = personalDebtList.querySelectorAll('.button-container');
+
+
+    buttonContainer.forEach((e) => {
+        e.firstChild.addEventListener('click', (event) => {           // console.log(e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML);
+            //console.log('Clear button of ' + e.parentElement.children[0].firstChild.innerHTML);
+
+        })
+    });
+    buttonContainer.forEach((e) => {
+        e.lastChild.addEventListener('click', (event) => {
+            
+           // console.log('Clear All button of ' + e.parentElement.children[0].firstChild.innerHTML);           
+
+                const Equalizer = {
+                    debtor: user.toLowerCase(),
+                    lender: e.parentElement.children[0].firstChild.innerHTML.toLowerCase(),
+                    amount: e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML,
+                    desc: "Auto generated debt to equalize balance",
+                }               
+
+                fetch('https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myEraseFunction', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(Equalizer)
+                    })
+                    .then(response => {
+                        return response.json()
+                    });
+                   
+               setTimeout('window.location.reload();', 200);
+            });
+    });
+
+
+    const debtList = document.querySelector('#debt-list');    
     let listMarkup = '';
 
 
@@ -391,9 +429,9 @@ function showHomeData(data) {
             listMarkup += `<li>
                     <div class='accordion-header' >
                         <p>${jsUcfirst(u.user)}<span class="balance positive"> ${debtListBalance}zł</span></p>
-                            <i id='${u.user}arrow' class="fas fa-chevron-down"></i>
+                            <i class="fas fa-chevron-down"></i>
                         </div>
-                        <div class="accordion-content" id='${u.user}'>
+                        <div class="accordion-content" >
                             <p> Details: </p>
                             <ul class='inner-list'>`
 
@@ -404,7 +442,7 @@ function showHomeData(data) {
                         <p>${jsUcfirst(u.user)}<span class="balance negative"> ${debtListBalance}zł</span></p>
                             <i class="fas fa-chevron-down"></i>
                         </div>
-                        <div class="accordion-content" id='${u.user}Accordion'>
+                        <div class="accordion-content" >
                             <p> Details: </p>
                             <ul class='inner-list'>`
 
@@ -424,13 +462,13 @@ function showHomeData(data) {
     });
 
     debtList.innerHTML = listMarkup;
-    let accordionHeaders = debtList.querySelectorAll('.accordion-header');
+    let accordionHeaders = debtList.querySelectorAll('.accordion-header');    
 
     accordionHeaders.forEach((e) => {
-        e.addEventListener('click', (event) => {           
-            e.parentNode.childNodes[3].classList.toggle("isActive");           
+        e.addEventListener('click', (event) => {
+            e.parentNode.childNodes[3].classList.toggle("isActive");
             e.childNodes[3].classList.toggle("fa-chevron-up");
-          
+
         })
     });
 }

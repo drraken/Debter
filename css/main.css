@@ -163,7 +163,8 @@ footer nav {
       background-color: #212121;
       color: white;
       padding: 0.5rem 1rem;
-      margin-left: 0.5rem; }
+      margin-left: 0.5rem;
+      cursor: pointer; }
     #home-page .personal-debts ul li div .user-container {
       margin-bottom: 0; }
     #home-page .personal-debts ul li div .button-container {
@@ -183,7 +184,8 @@ footer nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  cursor: pointer; }
   #home-page .add-button-container .add-button {
     color: white !important;
     font-weight: normal;
