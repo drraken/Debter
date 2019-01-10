@@ -1,7 +1,7 @@
 let submit_box = document.getElementById('submit-box');
 let login_page = document.getElementById('login-page');
 let submit_debt = document.getElementById('submit-debt');
-let add_button = document.getElementById('add-button');
+let add_button = document.getElementById('plusButton');
 let logout_button = document.getElementById('logout-button');
 let exit_add = document.getElementById('exit-add');
 let add_debt_page = document.getElementById('add-debt-page');
@@ -369,7 +369,7 @@ function showHomeData(data) {
     userPersonalizedBalance.forEach((i) => {
         if (i.user == user.toLowerCase()) {
             i.debts.forEach((d) => {
-                containerHomeMarkup += `<div class='SingleBlockDebtContainer'><div class = 'user-container'><h2>${jsUcfirst(d.name)}</h2><p class='balance'><span><strong>${d.amount}</strong></span></p> </div><div class='button-container'><a class="button">Clear</a><a class="buttonAll">Clear All</a></div></div>`;
+                containerHomeMarkup += `<div class='SingleBlockDebtContainer'><div class = 'user-container'><h2>${jsUcfirst(d.name)}</h2><p class='balance'><span><strong>${d.amount}</strong>zł</span></p> </div><div class='button-container'><a class="button">Clear</a><a class="buttonAll">Clear All</a></div></div>`;
             })
 
         }
