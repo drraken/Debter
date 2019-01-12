@@ -57,7 +57,7 @@ exit_add.addEventListener('click', (e) => {
 exitClearSome.addEventListener('click', (e) => {
     e.preventDefault();
     clearSomeSection.classList.add("is-close");
-    amountOutOfRangeMessage.innerHTML= '';
+    amountOutOfRangeMessage.innerHTML = '';
 
 });
 submit_debt.addEventListener('click', (e) => {
@@ -70,8 +70,7 @@ submit_debt.addEventListener('click', (e) => {
         addSomeNewData(debtor, lendor, amount, desc);
         add_debt_page.classList.add('is-close');
         ShowTheDebts();
-    }
-    else{
+    } else {
         //popup with error 'To large or to small amount';
         alert('Amount needs to be betwen 0 and 500');
     }
@@ -148,7 +147,7 @@ function addSomeNewData(debtor_val, lender_val, amount_val, desc_val) {
         .then(response => {
             return response.json()
         });
-        setTimeout('window.location.reload();', 500);
+    setTimeout('window.location.reload();', 500);
 
 
 
@@ -378,7 +377,7 @@ function showHomeData(data) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
     containerHomeMarkup = `<li>`;
-    const personalDebtList = document.querySelector('#personalDebtList');    
+    const personalDebtList = document.querySelector('#personalDebtList');
     userPersonalizedBalance.forEach((i) => {
         if (i.user == user.toLowerCase()) {
             i.debts.forEach((d) => {
@@ -391,22 +390,46 @@ function showHomeData(data) {
 
     containerHomeMarkup += '</li>';
     personalDebtList.innerHTML = containerHomeMarkup;
-    
+
     let buttonContainer = personalDebtList.querySelectorAll('.button-container');
 
 
-    buttonContainer.forEach((e) => {
-        e.firstChild.addEventListener('click', (event) => {         
-            clearSomeSection.classList.remove("is-close");             
-           let currentDebt = e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML;       
-            let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();      
-            submitSubstractPart.addEventListener('click', (event) =>{                
-                let amountOfSubstract = document.getElementById('amountOfSubstract').value;
-                if(currentDebt < 0){
-                    amountOfSubstract = -amountOfSubstract;
-                }
-                if(amountOfSubstract <= currentDebt && amountOfSubstract > 0){
-                const Equalizer = {
+function subtractDebt(debtor, lender, amount, desc) {
+    const Equalizer = {
+        debtor: debtor,
+        lender: lender,
+        amount: amount,
+        desc: desc,
+    }
+
+    fetch('https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myEraseFunction', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Equalizer)
+        })
+        .then(response => {
+            return response.json()
+        });
+    clearSomeSection.classList.add("is-close");
+    setTimeout('window.location.reload();', 500);
+};
+buttonContainer.forEach((e) => {
+    e.firstChild.addEventListener('click', (event) => {
+        clearSomeSection.classList.remove("is-close");
+        let currentDebt = Number( e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML);
+        let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();
+        submitSubstractPart.addEventListener('click', (event) => {
+            let amountOfSubstract = Number(document.getElementById('amountOfSubstract').value);
+            if (currentDebt > 0 && amountOfSubstract <= currentDebt && amountOfSubstract > 0) {
+                subtractDebt(user.toLowerCase(), lender, amountOfSubstract, "Auto generated debt to subtract part of the debt");
+            } else if (currentDebt < 0 && amountOfSubstract <= -currentDebt && amountOfSubstract > 0) {
+                subtractDebt(user.toLowerCase(), lender, -amountOfSubstract, "Auto generated debt to subtract part of the debt");
+            } else {
+                amountOutOfRangeMessage.innerHTML = 'Amount out of the current debt range';
+            }
+            /*const Equalizer = {
                     debtor: user.toLowerCase(),
                     lender: lender,
                     amount: amountOfSubstract,
@@ -424,53 +447,50 @@ function showHomeData(data) {
                         return response.json()
                     });
                 clearSomeSection.classList.add("is-close");
-               setTimeout('window.location.reload();', 500);
-                }
-                else{
-                    amountOutOfRangeMessage.innerHTML='Amount out of the current debt range';
-                }
-                 });
-            })
-        });
-  
-    buttonContainer.forEach((e) => {
-        e.lastChild.addEventListener('click', (event) => {         
-           let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();
-           let amount = e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML;
-                const Equalizer = {
-                    debtor: user.toLowerCase(),
-                    lender:lender,
-                    amount: amount,
-                    desc: "Auto generated debt to equalize balance",
-                }               
+               setTimeout('window.location.reload();', 500);*/
 
-                fetch('https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myEraseFunction', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(Equalizer)
-                    })
-                    .then(response => {
-                        return response.json()
-                    });
-                   
-               setTimeout('window.location.reload();', 500);
+        });
+    })
+});
+
+buttonContainer.forEach((e) => {
+    e.lastChild.addEventListener('click', (event) => {
+        let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();
+        let amount = e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML;
+        const Equalizer = {
+            debtor: user.toLowerCase(),
+            lender: lender,
+            amount: amount,
+            desc: "Auto generated debt to equalize balance",
+        }
+
+        fetch('https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myEraseFunction', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Equalizer)
+            })
+            .then(response => {
+                return response.json()
             });
+
+        setTimeout('window.location.reload();', 500);
     });
+});
 
 //<------------DEBT LIST---------->
-    const debtList = document.querySelector('#debt-list');    
-    let listMarkup = '';
+const debtList = document.querySelector('#debt-list');
+let listMarkup = '';
 
 
-    userPersonalizedBalance.forEach((u) => {
-        let debtListBalance = 0;
-        u.debts.forEach((d) => {
-            debtListBalance += d.amount;
-        })
-        if (debtListBalance >= 0) {
-            listMarkup += `<li>
+userPersonalizedBalance.forEach((u) => {
+    let debtListBalance = 0;
+    u.debts.forEach((d) => {
+        debtListBalance += d.amount;
+    })
+    if (debtListBalance >= 0) {
+        listMarkup += `<li>
                     <div class='accordion-header' >
                         <p>${jsUcfirst(u.user)}<span class="balance positive"> ${debtListBalance}zł</span></p>
                             <i class="fas fa-chevron-down"></i>
@@ -480,8 +500,8 @@ function showHomeData(data) {
                             <ul class='inner-list'>`
 
 
-        } else if (debtListBalance < 0) {
-            listMarkup += `<li>
+    } else if (debtListBalance < 0) {
+        listMarkup += `<li>
                     <div class='accordion-header'>
                         <p>${jsUcfirst(u.user)}<span class="balance negative"> ${debtListBalance}zł</span></p>
                             <i class="fas fa-chevron-down"></i>
@@ -490,31 +510,31 @@ function showHomeData(data) {
                             <p> Details: </p>
                             <ul class='inner-list'>`
 
-        }
-        u.debts.forEach((relation) => {
-            listMarkup += `<li>
+    }
+    u.debts.forEach((relation) => {
+        listMarkup += `<li>
                                     <div>
                                         <p>${jsUcfirst(relation.name)}</p>
                                         <p class="balance"><span>${relation.amount}zł</span></p>
                                     </div>
                                 </li>`
-        });
-        listMarkup += `        </ul>
+    });
+    listMarkup += `        </ul>
                         </div>
                     </li>`
 
-    });
+});
 
-    debtList.innerHTML = listMarkup;
-    let accordionHeaders = debtList.querySelectorAll('.accordion-header');    
+debtList.innerHTML = listMarkup;
+let accordionHeaders = debtList.querySelectorAll('.accordion-header');
 
-    accordionHeaders.forEach((e) => {
-        e.addEventListener('click', (event) => {
-            e.parentNode.childNodes[3].classList.toggle("isActive");
-            e.childNodes[3].classList.toggle("fa-chevron-up");
+accordionHeaders.forEach((e) => {
+    e.addEventListener('click', (event) => {
+        e.parentNode.childNodes[3].classList.toggle("isActive");
+        e.childNodes[3].classList.toggle("fa-chevron-up");
 
-        })
-    });
+    })
+});
 }
 
 ShowTheHomePageDebt();
