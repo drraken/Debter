@@ -17,6 +17,10 @@ let history_container = document.getElementById('history-container');
 let balance = document.getElementById('balance');
 let message = document.getElementById('message');
 let homePageContainer = document.getElementById('HomePageContainer');
+let clearSomeSection = document.getElementById('clearSomeSection');
+let exitClearSome = document.getElementById('exit-clearSome');
+let submitSubstractPart = document.getElementById('submitSubstractPart');
+let amountOutOfRangeMessage = document.getElementById('amountOutOfRangeMessage');
 logged_user.innerHTML = user;
 
 
@@ -40,27 +44,36 @@ logout_button.addEventListener('click', (e) => {
     history_page.classList.add('is-close');
     sessionStorage.removeItem('key');
     sessionStorage.removeItem('user');
-})
+});
 add_button.addEventListener('click', (e) => {
     e.preventDefault();
     add_debt_page.classList.remove("is-close");
-})
+});
 exit_add.addEventListener('click', (e) => {
     e.preventDefault();
     add_debt_page.classList.add("is-close");
 
-})
+});
+exitClearSome.addEventListener('click', (e) => {
+    e.preventDefault();
+    clearSomeSection.classList.add("is-close");
+    amountOutOfRangeMessage.innerHTML= '';
+
+});
 submit_debt.addEventListener('click', (e) => {
     e.preventDefault();
     let debtor = document.getElementById('debtor').value;
     let lendor = document.getElementById('lendor').value;
     let amount = document.getElementById('amount').value;
     let desc = document.getElementById('description').value;
-    if (getKey == '123') {
+    if (getKey == '123' && amount > 0 && amount < 500) {
         addSomeNewData(debtor, lendor, amount, desc);
         add_debt_page.classList.add('is-close');
         ShowTheDebts();
-
+    }
+    else{
+        //popup with error 'To large or to small amount';
+        alert('Amount needs to be betwen 0 and 500');
     }
 })
 submit_box.addEventListener('click', (e) => {
@@ -135,7 +148,7 @@ function addSomeNewData(debtor_val, lender_val, amount_val, desc_val) {
         .then(response => {
             return response.json()
         });
-        setTimeout('window.location.reload();', 200);
+        setTimeout('window.location.reload();', 500);
 
 
 
@@ -331,13 +344,13 @@ function showHomeData(data) {
     var lastRowOfBalanceMap = balanceMap[balanceMap.length - 1];
     balance.innerHTML = lastRowOfBalanceMap.balance_amount;
     if (lastRowOfBalanceMap.balance_amount > 0) {
-        message.innerHTML = "It`s look like you lend someone yours money.."
+        message.innerHTML = "It looks like you lend someone yours money.."
     }
     if ((lastRowOfBalanceMap.balance_amount < 0)) {
-        message.innerHTML = "It`s look like you own some money..."
+        message.innerHTML = "It looks like you own some money to someone..."
     }
     if (lastRowOfBalanceMap.balance_amount == 0) {
-        message.innerHTML = "It`s look like you gucci with money..."
+        message.innerHTML = "It looks like you are fine with debts..."
     }
 
 
@@ -378,25 +391,56 @@ function showHomeData(data) {
 
     containerHomeMarkup += '</li>';
     personalDebtList.innerHTML = containerHomeMarkup;
-    //<------------DEBT LIST---------->
+    
     let buttonContainer = personalDebtList.querySelectorAll('.button-container');
 
 
     buttonContainer.forEach((e) => {
-        e.firstChild.addEventListener('click', (event) => {           // console.log(e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML);
-            //console.log('Clear button of ' + e.parentElement.children[0].firstChild.innerHTML);
-
-        })
-    });
-    buttonContainer.forEach((e) => {
-        e.lastChild.addEventListener('click', (event) => {
-            
-           // console.log('Clear All button of ' + e.parentElement.children[0].firstChild.innerHTML);           
-
+        e.firstChild.addEventListener('click', (event) => {         
+            clearSomeSection.classList.remove("is-close");             
+           let currentDebt = e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML;       
+            let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();      
+            submitSubstractPart.addEventListener('click', (event) =>{                
+                let amountOfSubstract = document.getElementById('amountOfSubstract').value;
+                if(currentDebt < 0){
+                    amountOfSubstract = -amountOfSubstract;
+                }
+                if(amountOfSubstract <= currentDebt && amountOfSubstract > 0){
                 const Equalizer = {
                     debtor: user.toLowerCase(),
-                    lender: e.parentElement.children[0].firstChild.innerHTML.toLowerCase(),
-                    amount: e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML,
+                    lender: lender,
+                    amount: amountOfSubstract,
+                    desc: "Auto generated debt to subtract part of the debt",
+                }               
+
+                fetch('https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myEraseFunction', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(Equalizer)
+                    })
+                    .then(response => {
+                        return response.json()
+                    });
+                clearSomeSection.classList.add("is-close");
+               setTimeout('window.location.reload();', 500);
+                }
+                else{
+                    amountOutOfRangeMessage.innerHTML='Amount out of the current debt range';
+                }
+                 });
+            })
+        });
+  
+    buttonContainer.forEach((e) => {
+        e.lastChild.addEventListener('click', (event) => {         
+           let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();
+           let amount = e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML;
+                const Equalizer = {
+                    debtor: user.toLowerCase(),
+                    lender:lender,
+                    amount: amount,
                     desc: "Auto generated debt to equalize balance",
                 }               
 
@@ -411,11 +455,11 @@ function showHomeData(data) {
                         return response.json()
                     });
                    
-               setTimeout('window.location.reload();', 200);
+               setTimeout('window.location.reload();', 500);
             });
     });
 
-
+//<------------DEBT LIST---------->
     const debtList = document.querySelector('#debt-list');    
     let listMarkup = '';
 

@@ -5,8 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Debter</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/main.css">
     <link rel="shortcut icon" type="image/ico" href="img/favicon.ico" />
 </head>
@@ -26,7 +25,7 @@
         </nav>
     </header>
     <main>
-        <div id='login-page' >
+        <div id='login-page'>
             <h1> Please, login into your account</h1>
             <form id='login_form'>
                 <input type="text" placeholder="Login" id='login_box'>
@@ -42,14 +41,14 @@
                     <div class="message">
                         <p id='message'></p>
                     </div>
-                    <!--<div id='HomePageContainer' class="debts-list-placeholder"> -->        
-                        <ul id='personalDebtList'>
-                        
-                        </ul>               
+                    <!--<div id='HomePageContainer' class="debts-list-placeholder"> -->
+                    <ul id='personalDebtList'>
+
+                    </ul>
                     <!--</div>-->
                 </div>
             </div>
-            <div id='add-debt-page' class="is-close">
+            <div id='add-debt-page' class='form-class is-close'>
                 <span id='exit-add' class="far fa-times-circle"></span>
                 <form>
                     <span>Debtor</span>
@@ -72,18 +71,27 @@
                     <input id='amount' type="number" pattern="[a-zA-Z0-9]+" novalidate>
                     <span>Description</span>
                     <input id='description' type="text">
-                    <input id="submit-debt" type="submit" value="Add">
+                    <input id="submit-debt" class ='submitClass' type="submit" value="Add">
                 </form>
             </div>
-            <div id='plusButton'class='add-button-container'>
+            <div id='plusButton' class='add-button-container'>
                 <a class="add-button" id='add-button'> + </a>
+            </div>
+            <div id='clearSomeSection' class="form-class is-close">
+               <span id='exit-clearSome' class="far fa-times-circle"></span>
+               <form>
+                    <span>How much debt you want to subtract?</span>
+                    <input id='amountOfSubstract' type="number" pattern="[a-zA-Z0-9]+" novalidate>
+                    <p id='amountOutOfRangeMessage'></p>
+                    <input id="submitSubstractPart" class ='submitClass' type="submit" value="Submit"> 
+                </form>
             </div>
         </div>
 
         <div id='debt-page' class="page is-close">
-         <h1> Debt list: </h1>
+            <h1> Debt list: </h1>
             <ul id="debt-list">
-               
+
             </ul>
         </div>
 
