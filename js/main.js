@@ -125,6 +125,7 @@ function sendData(data, l, p) {
         history_page.classList.remove('is-close');
         logged_user.innerHTML = user_value;
     } else {
+        loadingOverlay.classList.add('is-close');
         errorMessageLoginSection.innerHTML = 'Wrong login data! Please try again.';
     }
 }
