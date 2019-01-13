@@ -44,7 +44,7 @@ body {
 
 .form-class {
   position: absolute;
-  border: solid 2px black;
+  border: solid 2px #616161;
   width: 320px;
   height: 550px;
   top: 50%;
@@ -57,13 +57,18 @@ body {
     padding: 10px;
     margin-top: 6px;
     font-size: 25px;
-    color: black; }
+    color: #212121; }
   .form-class form {
     margin-left: 17px;
     margin-top: 60px; }
     .form-class form span {
       float: inherit;
-      color: black; }
+      color: #212121; }
+    .form-class form i {
+      color: white;
+      position: absolute;
+      right: 40px;
+      margin-top: 41px; }
     .form-class form select {
       -webkit-appearance: none;
       display: block;
@@ -74,7 +79,7 @@ body {
       border: none;
       color: white;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-      background: #181a1c; }
+      background: #212121; }
       .form-class form select option {
         color: white; }
     .form-class form input {
@@ -87,7 +92,7 @@ body {
       border: none;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
       color: white;
-      background: #181a1c; }
+      background: #212121; }
     .form-class form .submitClass {
       -webkit-appearance: none;
       position: absolute;

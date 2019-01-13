@@ -510,3 +510,5 @@ accordionHeaders.forEach((e) => {
 }
 
 ShowTheHomePageDebt();
+
+//arrowy + redesign adding window

@@ -78,7 +78,7 @@ body {
 
 .form-class {
     position: absolute;
-    border: solid 2px black;
+    border: solid 2px $secondaryColor;
     width: 320px;
     height: 550px;
     top: 50%;
@@ -91,7 +91,7 @@ body {
         padding: 10px;
         margin-top: 6px;
         font-size: 25px;
-        color: black;
+        color: $primaryColor;
     }
     form {
 
@@ -99,8 +99,14 @@ body {
         margin-top: 60px;
         span {
             float: inherit;
-            color: black;
+            color: $primaryColor;
 
+        }
+        i{                              
+                color: white;  
+            position: absolute;
+            right: 40px;
+            margin-top: 41px;
         }
         select {
             -webkit-appearance: none;
@@ -112,11 +118,11 @@ body {
             border: none;
             color: white;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-            background: #181a1c;
+            background: $primaryColor;
 
             option {
                 color: white;
-            }
+            }            
 
         }
         input {
@@ -129,7 +135,7 @@ body {
             border: none;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
             color: white;
-            background: #181a1c;
+            background: $primaryColor;
 
         }
         .submitClass {
