@@ -71,12 +71,12 @@ submit_debt.addEventListener('click', (e) => {
     let lendor = document.getElementById('lendor').value;
     let amount = document.getElementById('amount').value;
     let desc = document.getElementById('description').value;
-    if (getKey == '123' && amount > 0 && amount < 500 && debtor != lendor) {
+    if (getKey == '123' && amount > 0 && amount <= 500 && debtor != lendor) {
         addSomeNewData(debtor, lendor, amount, desc);
         add_debt_page.classList.add('is-close');
         ShowTheDebts();
-    } else if(amount < 0 || amount > 500) {
-      errorMessageAddingSection.innerHTML = 'Amount must be between 0 and 500';
+    } else if(amount <= 0 || amount > 500) {
+      errorMessageAddingSection.innerHTML = 'Amount must be between 1 and 500';
       loadingOverlay.classList.add("is-close");
     }
     else if(debtor == lendor){
