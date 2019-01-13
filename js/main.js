@@ -22,6 +22,8 @@ let exitClearSome = document.getElementById('exit-clearSome');
 let submitSubstractPart = document.getElementById('submitSubstractPart');
 let amountOutOfRangeMessage = document.getElementById('amountOutOfRangeMessage');
 let errorMessageAddingSection = document.getElementById('errorMessageAddingSection');
+let errorMessageLoginSection = document.getElementById('errorMessageLoginSection');
+let loadingOverlay = document.getElementById('LoadingOverlay');
 logged_user.innerHTML = user;
 
 
@@ -64,6 +66,7 @@ exitClearSome.addEventListener('click', (e) => {
 });
 submit_debt.addEventListener('click', (e) => {
     e.preventDefault();
+    loadingOverlay.classList.remove("is-close");
     let debtor = document.getElementById('debtor').value;
     let lendor = document.getElementById('lendor').value;
     let amount = document.getElementById('amount').value;
@@ -81,10 +84,11 @@ submit_debt.addEventListener('click', (e) => {
 })
 submit_box.addEventListener('click', (e) => {
     e.preventDefault();
+    loadingOverlay.classList.remove("is-close");
     let login = document.getElementById('login_box').value.toLowerCase();
     let password = document.getElementById('password_box').value;
     CheckTheData(login, password);
-    ShowTheDebts();
+    ShowTheDebts();    
 })
 
 function CheckTheData(l, p) {
@@ -107,8 +111,7 @@ function sendData(data, l, p) {
 
         }
     })
-    if (valid) {
-        alert('Hello ' + l.toUpperCase());
+    if (valid) {        
         sessionStorage.setItem('key', key_value);
         sessionStorage.setItem('user', user_value);
         location.reload();
@@ -119,14 +122,8 @@ function sendData(data, l, p) {
         debt_page.classList.remove('is-close');
         history_page.classList.remove('is-close');
         logged_user.innerHTML = user_value;
-
-
-
-
-
-
     } else {
-        alert('Wrong login data!');
+        errorMessageLoginSection.innerHTML = 'Wrong login data! Please try again.';
     }
 }
 //<----------ADDING NEW DEBTS------------------>
@@ -420,11 +417,12 @@ function subtractDebt(debtor, lender, amount, desc) {
     setTimeout('window.location.reload();', 500);
 };
 buttonContainer.forEach((e) => {
-    e.firstChild.addEventListener('click', (event) => {
+    e.firstChild.addEventListener('click', (event) => {        
         clearSomeSection.classList.remove("is-close");
         let currentDebt = Number( e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML);
         let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();
         submitSubstractPart.addEventListener('click', (event) => {
+            loadingOverlay.classList.remove("is-close");
             let amountOfSubstract = Number(document.getElementById('amountOfSubstract').value);
             if (currentDebt > 0 && amountOfSubstract <= currentDebt && amountOfSubstract > 0) {
                 subtractDebt(user.toLowerCase(), lender, amountOfSubstract, "Auto generated debt to subtract part of the debt");
@@ -442,6 +440,7 @@ buttonContainer.forEach((e) => {
 
 buttonContainer.forEach((e) => {
     e.lastChild.addEventListener('click', (event) => {
+        loadingOverlay.classList.remove("is-close");
         let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();
         let amount = e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML;
          subtractDebt(user.toLowerCase(), lender, amount, "Auto generated debt to equalize balance");     
@@ -507,6 +506,3 @@ accordionHeaders.forEach((e) => {
 }
 
 ShowTheHomePageDebt();
-
-// dodac warunek ze nie mozna przypisac dlugu sam do siebie bo bugi
-// dodac errory przy dodawaniu ze za duza wartosc

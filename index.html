@@ -11,6 +11,9 @@
 </head>
 
 <body>
+    <div id='LoadingOverlay'  class='is-close'>
+           <img id ='LoadingGif' src="img/Spinner.gif">
+       </div>
     <header id='header' class='is-close'>
         <nav>
             <div class="nav-wrapper">
@@ -24,13 +27,14 @@
             </div>
         </nav>
     </header>
-    <main>
+    <main>       
         <div id='login-page'>
             <h1> Please, login into your account</h1>
             <form id='login_form'>
                 <input type="text" placeholder="Login" id='login_box'>
                 <input type="password" placeholder="Password" id='password_box'>
                 <input type="submit" id='submit-box' value='Log In'>
+                <p id='errorMessageLoginSection' class='error-message'></p>
             </form>
         </div>
 
