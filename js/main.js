@@ -77,9 +77,11 @@ submit_debt.addEventListener('click', (e) => {
         ShowTheDebts();
     } else if(amount < 0 || amount > 500) {
       errorMessageAddingSection.innerHTML = 'Amount must be between 0 and 500';
+      loadingOverlay.classList.add("is-close");
     }
     else if(debtor == lendor){
       errorMessageAddingSection.innerHTML = 'Debtor must be different then lender';
+      loadingOverlay.classList.add("is-close");
     }
 })
 submit_box.addEventListener('click', (e) => {
@@ -432,6 +434,7 @@ buttonContainer.forEach((e) => {
                 clearSomeSection.classList.add("is-close");
             } else {
                 amountOutOfRangeMessage.innerHTML = 'Amount out of the current debt range';
+                loadingOverlay.classList.add("is-close");
             }            
 
         });
