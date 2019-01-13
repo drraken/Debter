@@ -70,3 +70,8 @@ body {
 .is-close {
     display: none !important;
 }
+.error-message{
+    color: $failureColor;
+    font-weight: 800;
+    margin: 0;
+}

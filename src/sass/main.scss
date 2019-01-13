@@ -340,6 +340,8 @@ footer {
         }
         .submitClass {
             -webkit-appearance: none;
+            position: absolute;
+            bottom: 40px;
             margin-top: 50px;
             height: 40px;
 
@@ -361,12 +363,7 @@ footer {
             position: absolute;
             bottom: 30px;  
             margin-bottom: 15px;
-        }
-        p{
-            color: red;
-            font-weight: 600;
-            margin: 0;
-        }
+        }       
     }
 }
 

@@ -37,6 +37,11 @@ body {
 .is-close {
   display: none !important; }
 
+.error-message {
+  color: #D50000;
+  font-weight: 800;
+  margin: 0; }
+
 header nav {
   padding: 1rem;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
@@ -303,6 +308,8 @@ footer nav {
       background: #181a1c; }
     .form-class form .submitClass {
       -webkit-appearance: none;
+      position: absolute;
+      bottom: 40px;
       margin-top: 50px;
       height: 40px; }
 
@@ -317,7 +324,3 @@ footer nav {
     position: absolute;
     bottom: 30px;
     margin-bottom: 15px; }
-  #clearSomeSection form p {
-    color: red;
-    font-weight: 600;
-    margin: 0; }

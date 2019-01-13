@@ -21,6 +21,7 @@ let clearSomeSection = document.getElementById('clearSomeSection');
 let exitClearSome = document.getElementById('exit-clearSome');
 let submitSubstractPart = document.getElementById('submitSubstractPart');
 let amountOutOfRangeMessage = document.getElementById('amountOutOfRangeMessage');
+let errorMessageAddingSection = document.getElementById('errorMessageAddingSection');
 logged_user.innerHTML = user;
 
 
@@ -52,6 +53,7 @@ add_button.addEventListener('click', (e) => {
 exit_add.addEventListener('click', (e) => {
     e.preventDefault();
     add_debt_page.classList.add("is-close");
+    errorMessageAddingSection.innerHTML = '';
 
 });
 exitClearSome.addEventListener('click', (e) => {
@@ -66,13 +68,15 @@ submit_debt.addEventListener('click', (e) => {
     let lendor = document.getElementById('lendor').value;
     let amount = document.getElementById('amount').value;
     let desc = document.getElementById('description').value;
-    if (getKey == '123' && amount > 0 && amount < 500) {
+    if (getKey == '123' && amount > 0 && amount < 500 && debtor != lendor) {
         addSomeNewData(debtor, lendor, amount, desc);
         add_debt_page.classList.add('is-close');
         ShowTheDebts();
-    } else {
-        //popup with error 'To large or to small amount';
-        alert('Amount needs to be betwen 0 and 500');
+    } else if(amount < 0 || amount > 500) {
+      errorMessageAddingSection.innerHTML = 'Amount must be between 0 and 500';
+    }
+    else if(debtor == lendor){
+      errorMessageAddingSection.innerHTML = 'Debtor must be different then lender';
     }
 })
 submit_box.addEventListener('click', (e) => {
@@ -125,7 +129,7 @@ function sendData(data, l, p) {
         alert('Wrong login data!');
     }
 }
-//adding new debts to database
+//<----------ADDING NEW DEBTS------------------>
 function addSomeNewData(debtor_val, lender_val, amount_val, desc_val) {
 
     const Debt = {
@@ -325,9 +329,9 @@ let userPersonalizedBalance = [
 
 function showHomeData(data) {
     data.forEach((e) => {
-        if (e.debtor == user.toLowerCase()) {
+        if (e.debtor == user.toLowerCase() && e.debtor != e.lender) {
             balance_amount -= e.amount;
-        } else if (e.lender == user.toLowerCase()) {
+        } else if (e.lender == user.toLowerCase() && e.debtor != e.lender) {
             balance_amount += e.amount;
         }
         let temp = [];
@@ -370,7 +374,7 @@ function showHomeData(data) {
             }
         })
 
-    })
+    });
 
 
     function jsUcfirst(string) {
@@ -390,10 +394,10 @@ function showHomeData(data) {
 
     containerHomeMarkup += '</li>';
     personalDebtList.innerHTML = containerHomeMarkup;
-
-    let buttonContainer = personalDebtList.querySelectorAll('.button-container');
-
-
+    
+//<---------Clear buttons---------->
+let buttonContainer = personalDebtList.querySelectorAll('.button-container');
+    
 function subtractDebt(debtor, lender, amount, desc) {
     const Equalizer = {
         debtor: debtor,
@@ -412,7 +416,7 @@ function subtractDebt(debtor, lender, amount, desc) {
         .then(response => {
             return response.json()
         });
-    clearSomeSection.classList.add("is-close");
+    
     setTimeout('window.location.reload();', 500);
 };
 buttonContainer.forEach((e) => {
@@ -424,30 +428,13 @@ buttonContainer.forEach((e) => {
             let amountOfSubstract = Number(document.getElementById('amountOfSubstract').value);
             if (currentDebt > 0 && amountOfSubstract <= currentDebt && amountOfSubstract > 0) {
                 subtractDebt(user.toLowerCase(), lender, amountOfSubstract, "Auto generated debt to subtract part of the debt");
+                clearSomeSection.classList.add("is-close");
             } else if (currentDebt < 0 && amountOfSubstract <= -currentDebt && amountOfSubstract > 0) {
                 subtractDebt(user.toLowerCase(), lender, -amountOfSubstract, "Auto generated debt to subtract part of the debt");
+                clearSomeSection.classList.add("is-close");
             } else {
                 amountOutOfRangeMessage.innerHTML = 'Amount out of the current debt range';
-            }
-            /*const Equalizer = {
-                    debtor: user.toLowerCase(),
-                    lender: lender,
-                    amount: amountOfSubstract,
-                    desc: "Auto generated debt to subtract part of the debt",
-                }               
-
-                fetch('https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myEraseFunction', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(Equalizer)
-                    })
-                    .then(response => {
-                        return response.json()
-                    });
-                clearSomeSection.classList.add("is-close");
-               setTimeout('window.location.reload();', 500);*/
+            }            
 
         });
     })
@@ -457,25 +444,7 @@ buttonContainer.forEach((e) => {
     e.lastChild.addEventListener('click', (event) => {
         let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();
         let amount = e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML;
-        const Equalizer = {
-            debtor: user.toLowerCase(),
-            lender: lender,
-            amount: amount,
-            desc: "Auto generated debt to equalize balance",
-        }
-
-        fetch('https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myEraseFunction', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(Equalizer)
-            })
-            .then(response => {
-                return response.json()
-            });
-
-        setTimeout('window.location.reload();', 500);
+         subtractDebt(user.toLowerCase(), lender, amount, "Auto generated debt to equalize balance");     
     });
 });
 
@@ -538,3 +507,6 @@ accordionHeaders.forEach((e) => {
 }
 
 ShowTheHomePageDebt();
+
+// dodac warunek ze nie mozna przypisac dlugu sam do siebie bo bugi
+// dodac errory przy dodawaniu ze za duza wartosc

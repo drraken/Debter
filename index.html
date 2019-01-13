@@ -59,7 +59,7 @@
                         <option value="wojtek">Wojtek</option>
                         <option value="daniel">Daniel</option>
                     </select>
-                    <span>Lendor</span>
+                    <span>Lender</span>
                     <select id='lendor' name="lendor">
                         <option value="arek">Arek</option>
                         <option value="kuba">Kuba</option>
@@ -71,6 +71,7 @@
                     <input id='amount' type="number" pattern="[a-zA-Z0-9]+" novalidate>
                     <span>Description</span>
                     <input id='description' type="text">
+                    <p id='errorMessageAddingSection' class='error-message'></p>
                     <input id="submit-debt" class ='submitClass' type="submit" value="Add">
                 </form>
             </div>
@@ -82,7 +83,7 @@
                <form>
                     <span>How much debt you want to subtract?</span>
                     <input id='amountOfSubstract' type="number" pattern="[a-zA-Z0-9]+" novalidate>
-                    <p id='amountOutOfRangeMessage'></p>
+                    <p id='amountOutOfRangeMessage' class='error-message'></p>
                     <input id="submitSubstractPart" class ='submitClass' type="submit" value="Submit"> 
                 </form>
             </div>
