@@ -25,216 +25,6 @@ let errorMessageAddingSection = document.getElementById('errorMessageAddingSecti
 let errorMessageLoginSection = document.getElementById('errorMessageLoginSection');
 let loadingOverlay = document.getElementById('LoadingOverlay');
 logged_user.innerHTML = user;
-
-
-if (getKey == '123') {
-    login_page.classList.add("is-close");
-    header.classList.remove("is-close");
-    footer.classList.remove('is-close');
-    home_page.classList.remove("is-close");
-    debt_page.classList.remove('is-close');
-    history_page.classList.remove('is-close');
-}
-
-logout_button.addEventListener('click', (e) => {
-    e.preventDefault();
-    login_page.classList.remove("is-close");
-    add_debt_page.classList.add("is-close");
-    header.classList.add('is-close');
-    footer.classList.add('is-close');
-    home_page.classList.add("is-close");
-    debt_page.classList.add('is-close');
-    history_page.classList.add('is-close');
-    sessionStorage.removeItem('key');
-    sessionStorage.removeItem('user');
-});
-add_button.addEventListener('click', (e) => {
-    e.preventDefault();
-    add_debt_page.classList.remove("is-close");
-});
-exit_add.addEventListener('click', (e) => {
-    e.preventDefault();
-    add_debt_page.classList.add("is-close");
-    errorMessageAddingSection.innerHTML = '';
-
-});
-exitClearSome.addEventListener('click', (e) => {
-    e.preventDefault();
-    clearSomeSection.classList.add("is-close");
-    amountOutOfRangeMessage.innerHTML = '';
-
-});
-submit_debt.addEventListener('click', (e) => {
-    e.preventDefault();
-    loadingOverlay.classList.remove("is-close");
-    let debtor = document.getElementById('debtor').value;
-    let lendor = document.getElementById('lendor').value;
-    let amount = document.getElementById('amount').value;
-    let desc = document.getElementById('description').value;
-    if (getKey == '123' && amount > 0 && amount <= 500 && debtor != lendor) {
-        addSomeNewData(debtor, lendor, amount, desc);
-        add_debt_page.classList.add('is-close');
-        ShowTheDebts();
-    } else if(amount <= 0 || amount > 500) {
-      errorMessageAddingSection.innerHTML = 'Amount must be between 1 and 500';
-      loadingOverlay.classList.add("is-close");
-    }
-    else if(debtor == lendor){
-      errorMessageAddingSection.innerHTML = 'Debtor must be different then lender';
-      loadingOverlay.classList.add("is-close");
-    }
-})
-submit_box.addEventListener('click', (e) => {
-    e.preventDefault();
-    loadingOverlay.classList.remove("is-close");
-    let login = document.getElementById('login_box').value.toLowerCase();
-    let password = document.getElementById('password_box').value;
-    CheckTheData(login, password);
-    ShowTheDebts();    
-})
-
-function CheckTheData(l, p) {
-
-    const url = "https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/users";
-    fetch(url)
-        .then(response => response.json())
-        .then(data => sendData(JSON.parse(data.query), l, p));
-
-};
-//checking if all parameters are correct
-function sendData(data, l, p) {
-    let valid = false;
-    data.forEach(element => {
-        if (element.Login == l && element.Password == p) {
-            console.log(element);
-            valid = true;
-            key_value = element.key;
-            user_value = element.Login.toUpperCase();
-
-        }
-    })
-    if (valid) {        
-        sessionStorage.setItem('key', key_value);
-        sessionStorage.setItem('user', user_value);
-        location.reload();
-        login_page.classList.add("is-close");
-        header.classList.remove("is-close");
-        footer.classList.remove('is-close');
-        home_page.classList.remove("is-close");
-        debt_page.classList.remove('is-close');
-        history_page.classList.remove('is-close');
-        logged_user.innerHTML = user_value;
-    } else {
-        loadingOverlay.classList.add('is-close');
-        errorMessageLoginSection.innerHTML = 'Wrong login data! Please try again.';
-    }
-}
-//<----------ADDING NEW DEBTS------------------>
-function addSomeNewData(debtor_val, lender_val, amount_val, desc_val) {
-
-    const Debt = {
-        debtor: debtor_val,
-        lender: lender_val,
-        amount: amount_val,
-        desc: desc_val,
-    }
-
-    console.log(Debt);
-
-    fetch('https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myPostLambda', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(Debt)
-        })
-        .then(response => {
-            return response.json()
-        });
-    setTimeout('window.location.reload();', 500);
-
-
-
-}
-
-
-/////////////////////////////////////////////////////////////////////////////////////////
-//<------HISTORY PAGE RENDERING------>
-function ShowTheDebts() {
-    if (getKey == '123') {
-        const url = "https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myHistoryLambda";
-        fetch(url)
-            .then(response => response.json())
-            .then(data => showData(JSON.parse(data.query)));
-    } else {
-        history_container.innerHTML = "YOU ARE NOT ALLOWED TO SEE THIS CONTENT";
-    }
-};
-
-let containerMarkup = '';
-let historyMap = [];
-
-function showData(data) {
-    data.forEach((e) => {
-        let temp = {};
-        temp.id = e.idTransaction;
-        temp.debtor = e.debtor;
-        temp.lender = e.lender;
-        temp.amount = e.amount;
-        temp.desc = e.description;
-        temp.date = e.CreationDate;
-        historyMap.push(temp);
-    });
-    containerMarkup = `<ul class='history-class'>`;
-
-
-    historyMap.forEach((u) => {
-        containerMarkup += `<li class='history-li-class'> <p>ID:</p> ${u.id}  <p>Debtor:</p> ${u.debtor}  <p>Lender:</p> ${u.lender}  <p>Amount:</p> ${u.amount}<p>Desc:</p> ${u.desc}  <p>Date:</p> ${u.date}</li><br>`;
-    });
-
-    containerMarkup += '</ul>';
-    history_container.innerHTML = containerMarkup;
-}
-ShowTheDebts();
-
-//<--------BOTTOM NAVIGATION-------->
-let bottomNavigation = document.querySelectorAll('footer nav ul li');
-let pages = document.querySelectorAll('div.page');
-
-bottomNavigation.forEach((link, index) => {
-    link.addEventListener('click', (e) => {
-        changeNavigationState(bottomNavigation, index);
-    })
-});
-
-function changeNavigationState(links, activeIndex) {
-    bottomNavigation.forEach((link, index) => {
-        if (index == activeIndex) {
-            link.classList.add('is-active');
-            pages[index].classList.add('is-active');
-        } else {
-            link.classList.remove('is-active');
-            pages[index].classList.remove('is-active');
-        }
-    });
-}
-
-
-
-//<------------HOME PAGE RENDERING----------->
-function ShowTheHomePageDebt() {
-    if (getKey == '123') {
-        const url = " https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/transactionHistory";
-        fetch(url)
-            .then(response => response.json())
-            .then(data => showHomeData(JSON.parse(data.query)));
-    } else {
-        home_page.innerHTML = "YOU ARE NOT ALLOWED TO SEE THIS CONTENT";
-    }
-};
-
-
-
 let containerHomeMarkup = '';
 let balanceMap = [];
 let homeMap = [];
@@ -326,28 +116,230 @@ let userPersonalizedBalance = [
         }
                     ]
     }]
+let containerMarkup = '';
+let historyMap = [];
 
+
+if (getKey == '123') {
+    login_page.classList.add("is-close");
+    header.classList.remove("is-close");
+    footer.classList.remove('is-close');
+    home_page.classList.remove("is-close");
+    debt_page.classList.remove('is-close');
+    history_page.classList.remove('is-close');
+}
+//<---------------CLICK EVENTS-------------->
+logout_button.addEventListener('click', (e) => {
+    e.preventDefault();
+    login_page.classList.remove("is-close");
+    add_debt_page.classList.add("is-close");
+    header.classList.add('is-close');
+    footer.classList.add('is-close');
+    home_page.classList.add("is-close");
+    debt_page.classList.add('is-close');
+    history_page.classList.add('is-close');
+    sessionStorage.removeItem('key');
+    sessionStorage.removeItem('user');
+});
+add_button.addEventListener('click', (e) => {
+    e.preventDefault();
+    add_debt_page.classList.remove("is-close");
+});
+exit_add.addEventListener('click', (e) => {
+    e.preventDefault();
+    add_debt_page.classList.add("is-close");
+    errorMessageAddingSection.innerHTML = '';
+
+});
+exitClearSome.addEventListener('click', (e) => {
+    e.preventDefault();
+    clearSomeSection.classList.add("is-close");
+    amountOutOfRangeMessage.innerHTML = '';
+
+});
+submit_debt.addEventListener('click', (e) => {
+    console.time('Submit debt time');
+    e.preventDefault();
+    loadingOverlay.classList.remove("is-close");
+    let debtor = document.getElementById('debtor').value;
+    let lendor = document.getElementById('lendor').value;
+    let amount = document.getElementById('amount').value;
+    let desc = document.getElementById('description').value;
+    if (getKey == '123' && amount > 0 && amount <= 500 && debtor != lendor) {
+        addSomeNewData(debtor, lendor, amount, desc);
+        add_debt_page.classList.add('is-close');      
+    } else if (amount <= 0 || amount > 500) {
+        errorMessageAddingSection.innerHTML = 'Amount must be between 1 and 500';
+        loadingOverlay.classList.add("is-close");
+    } else if (debtor == lendor) {
+        errorMessageAddingSection.innerHTML = 'Debtor must be different then lender';
+        loadingOverlay.classList.add("is-close");
+    }
+})
+submit_box.addEventListener('click', (e) => {
+    e.preventDefault();
+    loadingOverlay.classList.remove("is-close");
+    let login = document.getElementById('login_box').value.toLowerCase();
+    let password = document.getElementById('password_box').value;
+    CheckTheData(login, password);   
+})
+
+function jsUcfirst(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+//<---------LOGIN FUNCTIONS------------->
+function CheckTheData(l, p) {
+    const url = "https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/users";
+    fetch(url)
+        .then(response => response.json())
+        .then(data => sendData(JSON.parse(data.query), l, p));
+};
+
+function sendData(data, l, p) {
+    let valid = false;
+    data.forEach(element => {
+        if (element.Login == l && element.Password == p) {           
+            valid = true;
+            key_value = element.key;
+            user_value = element.Login.toUpperCase();
+        }
+    })
+    if (valid) {
+        sessionStorage.setItem('key', key_value);
+        sessionStorage.setItem('user', user_value);        
+        login_page.classList.add("is-close");
+        header.classList.remove("is-close");
+        footer.classList.remove('is-close');
+        home_page.classList.remove("is-close");
+        debt_page.classList.remove('is-close');
+        history_page.classList.remove('is-close');
+        logged_user.innerHTML = user_value;
+        window.location.reload();       
+    } else {
+        loadingOverlay.classList.add('is-close');
+        errorMessageLoginSection.innerHTML = 'Wrong login data! Please try again.';
+    }
+}
+//<----------ADDING NEW DEBTS------------------>
+function addSomeNewData(debtor_val, lender_val, amount_val, desc_val) {
+    
+    const Debt = {
+        debtor: debtor_val,
+        lender: lender_val,
+        amount: amount_val,
+        desc: desc_val,
+    }    
+
+    fetch('https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myPostLambda', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Debt)
+        })
+        .then(response => {
+            return response.json()
+        });
+    setTimeout('window.location.reload();', 500);
+}
+
+//<------HISTORY PAGE RENDERING------>
+function ShowTheDebts() {
+    if (getKey == '123') {
+        const url = "https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myHistoryLambda";
+        fetch(url)
+            .then(response => response.json())
+            .then(data => showData(JSON.parse(data.query)));
+    } else {
+        history_container.innerHTML = "YOU ARE NOT ALLOWED TO SEE THIS CONTENT";
+    }
+};
+
+function showData(data) {
+    console.time('Time of HistoryPage');
+    data.forEach((e) => {
+        let temp = {};
+        temp.id = e.idTransaction;
+        temp.debtor = e.debtor;
+        temp.lender = e.lender;
+        temp.amount = e.amount;
+        temp.desc = e.description;
+        temp.date = e.CreationDate;
+        historyMap.push(temp);
+    });
+    containerMarkup = `<ul class='history-class'>`;
+
+
+    historyMap.forEach((u) => {
+        containerMarkup += `<li class='history-li-class'> <p>ID:</p> ${u.id}  <p>Debtor:</p> ${u.debtor}  <p>Lender:</p> ${u.lender}  <p>Amount:</p> ${u.amount}<p>Desc:</p> ${u.desc}  <p>Date:</p> ${u.date}</li><br>`;
+    });
+
+    containerMarkup += '</ul>';
+    history_container.innerHTML = containerMarkup;
+     console.timeEnd('Time of HistoryPage');
+} 
+
+
+//<--------BOTTOM NAVIGATION-------->
+let bottomNavigation = document.querySelectorAll('footer nav ul li');
+let pages = document.querySelectorAll('div.page');
+
+bottomNavigation.forEach((link, index) => {
+    link.addEventListener('click', (e) => {
+        changeNavigationState(bottomNavigation, index);
+    })
+});
+
+function changeNavigationState(links, activeIndex) {
+    bottomNavigation.forEach((link, index) => {
+        if (index == activeIndex) {
+            link.classList.add('is-active');
+            pages[index].classList.add('is-active');
+        } else {
+            link.classList.remove('is-active');
+            pages[index].classList.remove('is-active');
+        }
+    });
+}
+
+
+
+//<------------HOME PAGE RENDERING----------->
+function ShowTheHomePageDebt() {
+    console.time('Time of showHomeData');
+    console.time('Time of downloading data from db');
+    if (getKey == '123') {
+        const url = " https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/transactionHistory";
+        fetch(url)
+            .then(response => response.json())
+            .then(data => showHomeData(JSON.parse(data.query)));
+             console.timeEnd('Time of downloading data from db'); 
+    } else {
+        home_page.innerHTML = "YOU ARE NOT ALLOWED TO SEE THIS CONTENT";
+    }
+};
 function showHomeData(data) {
+    
     data.forEach((e) => {
         if (e.debtor == user.toLowerCase() && e.debtor != e.lender) {
             balance_amount -= e.amount;
         } else if (e.lender == user.toLowerCase() && e.debtor != e.lender) {
             balance_amount += e.amount;
         }
+        let tempBalance = [];
         let temp = [];
-        let temp1 = [];
-        temp.balance_amount = balance_amount;
-        temp1.debtor = e.debtor;
-        temp1.lender = e.lender;
-        temp1.amount = e.amount;
-        balanceMap.push(temp);
-        homeMap.push(temp1);
+        tempBalance.balance_amount = balance_amount;
+        temp.debtor = e.debtor;
+        temp.lender = e.lender;
+        temp.amount = e.amount;
+        balanceMap.push(tempBalance);
+        homeMap.push(temp);
 
     });
     var lastRowOfBalanceMap = balanceMap[balanceMap.length - 1];
     balance.innerHTML = lastRowOfBalanceMap.balance_amount;
     if (lastRowOfBalanceMap.balance_amount > 0) {
-        message.innerHTML = "It looks like you lend someone yours money.."
+        message.innerHTML = "It looks like you lend someone your money.."
     }
     if ((lastRowOfBalanceMap.balance_amount < 0)) {
         message.innerHTML = "It looks like you own some money to someone..."
@@ -355,9 +347,8 @@ function showHomeData(data) {
     if (lastRowOfBalanceMap.balance_amount == 0) {
         message.innerHTML = "It looks like you are fine with debts..."
     }
-
-
-    userPersonalizedBalance.forEach((d) => {
+    console.time("Loopole");
+    userPersonalizedBalance.forEach((d) => {        
         homeMap.forEach((h) => {
             if (h.lender == d.user) {
                 d.debts.forEach((x) => {
@@ -375,13 +366,9 @@ function showHomeData(data) {
         })
 
     });
-
-
-    function jsUcfirst(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+    console.timeEnd("Loopole");
     containerHomeMarkup = `<li>`;
-    const personalDebtList = document.querySelector('#personalDebtList');
+    const personalDebtList = document.querySelector('#personalDebtList');     
     userPersonalizedBalance.forEach((i) => {
         if (i.user == user.toLowerCase()) {
             i.debts.forEach((d) => {
@@ -395,74 +382,74 @@ function showHomeData(data) {
     containerHomeMarkup += '</li>';
     personalDebtList.innerHTML = containerHomeMarkup;
     
-//<---------Clear buttons---------->
-let buttonContainer = personalDebtList.querySelectorAll('.button-container');
-    
-function subtractDebt(debtor, lender, amount, desc) {
-    const Equalizer = {
-        debtor: debtor,
-        lender: lender,
-        amount: amount,
-        desc: desc,
-    }
+    //<---------Clear buttons---------->
+    let buttonContainer = personalDebtList.querySelectorAll('.button-container');
 
-    fetch('https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myEraseFunction', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(Equalizer)
+    function subtractDebt(debtor, lender, amount, desc) {
+        const Equalizer = {
+            debtor: debtor,
+            lender: lender,
+            amount: amount,
+            desc: desc,
+        }
+
+        fetch('https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myEraseFunction', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Equalizer)
+            })
+            .then(response => {
+                return response.json()
+            });
+
+        setTimeout('window.location.reload();', 500);
+    };
+    buttonContainer.forEach((e) => {
+        e.firstChild.addEventListener('click', (event) => {
+            clearSomeSection.classList.remove("is-close");
+            let currentDebt = Number(e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML);
+            let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();
+            submitSubstractPart.addEventListener('click', (event) => {
+                loadingOverlay.classList.remove("is-close");
+                let amountOfSubstract = Number(document.getElementById('amountOfSubstract').value);
+                if (currentDebt > 0 && amountOfSubstract <= currentDebt && amountOfSubstract > 0) {
+                    subtractDebt(user.toLowerCase(), lender, amountOfSubstract, "Auto generated debt to subtract part of the debt");
+                    clearSomeSection.classList.add("is-close");
+                } else if (currentDebt < 0 && amountOfSubstract <= -currentDebt && amountOfSubstract > 0) {
+                    subtractDebt(user.toLowerCase(), lender, -amountOfSubstract, "Auto generated debt to subtract part of the debt");
+                    clearSomeSection.classList.add("is-close");
+                } else {
+                    amountOutOfRangeMessage.innerHTML = 'Amount out of the current debt range';
+                    loadingOverlay.classList.add("is-close");
+                }
+
+            });
         })
-        .then(response => {
-            return response.json()
-        });
-    
-    setTimeout('window.location.reload();', 500);
-};
-buttonContainer.forEach((e) => {
-    e.firstChild.addEventListener('click', (event) => {        
-        clearSomeSection.classList.remove("is-close");
-        let currentDebt = Number( e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML);
-        let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();
-        submitSubstractPart.addEventListener('click', (event) => {
-            loadingOverlay.classList.remove("is-close");
-            let amountOfSubstract = Number(document.getElementById('amountOfSubstract').value);
-            if (currentDebt > 0 && amountOfSubstract <= currentDebt && amountOfSubstract > 0) {
-                subtractDebt(user.toLowerCase(), lender, amountOfSubstract, "Auto generated debt to subtract part of the debt");
-                clearSomeSection.classList.add("is-close");
-            } else if (currentDebt < 0 && amountOfSubstract <= -currentDebt && amountOfSubstract > 0) {
-                subtractDebt(user.toLowerCase(), lender, -amountOfSubstract, "Auto generated debt to subtract part of the debt");
-                clearSomeSection.classList.add("is-close");
-            } else {
-                amountOutOfRangeMessage.innerHTML = 'Amount out of the current debt range';
-                loadingOverlay.classList.add("is-close");
-            }            
-
-        });
-    })
-});
-
-buttonContainer.forEach((e) => {
-    e.lastChild.addEventListener('click', (event) => {
-        loadingOverlay.classList.remove("is-close");
-        let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();
-        let amount = e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML;
-         subtractDebt(user.toLowerCase(), lender, amount, "Auto generated debt to equalize balance");     
     });
-});
 
-//<------------DEBT LIST---------->
-const debtList = document.querySelector('#debt-list');
-let listMarkup = '';
+    buttonContainer.forEach((e) => {
+        e.lastChild.addEventListener('click', (event) => {
+            loadingOverlay.classList.remove("is-close");
+            let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();
+            let amount = e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML;
+            subtractDebt(user.toLowerCase(), lender, amount, "Auto generated debt to equalize balance");
+        });
+    });
+
+    //<------------DEBT LIST---------->
+    const debtList = document.querySelector('#debt-list');
+    let listMarkup = '';
 
 
-userPersonalizedBalance.forEach((u) => {
-    let debtListBalance = 0;
-    u.debts.forEach((d) => {
-        debtListBalance += d.amount;
-    })
-    if (debtListBalance >= 0) {
-        listMarkup += `<li>
+    userPersonalizedBalance.forEach((u) => {
+        let debtListBalance = 0;
+        u.debts.forEach((d) => {
+            debtListBalance += d.amount;
+        })
+        if (debtListBalance >= 0) {
+            listMarkup += `<li>
                     <div class='accordion-header' >
                         <p>${jsUcfirst(u.user)}<span class="balance positive"> ${debtListBalance}zł</span></p>
                             <i class="fas fa-chevron-down"></i>
@@ -472,8 +459,8 @@ userPersonalizedBalance.forEach((u) => {
                             <ul class='inner-list'>`
 
 
-    } else if (debtListBalance < 0) {
-        listMarkup += `<li>
+        } else if (debtListBalance < 0) {
+            listMarkup += `<li>
                     <div class='accordion-header'>
                         <p>${jsUcfirst(u.user)}<span class="balance negative"> ${debtListBalance}zł</span></p>
                             <i class="fas fa-chevron-down"></i>
@@ -482,33 +469,34 @@ userPersonalizedBalance.forEach((u) => {
                             <p> Details: </p>
                             <ul class='inner-list'>`
 
-    }
-    u.debts.forEach((relation) => {
-        listMarkup += `<li>
+        }
+        u.debts.forEach((relation) => {
+            listMarkup += `<li>
                                     <div>
                                         <p>${jsUcfirst(relation.name)}</p>
                                         <p class="balance"><span>${relation.amount}zł</span></p>
                                     </div>
                                 </li>`
-    });
-    listMarkup += `        </ul>
+        });
+        listMarkup += `        </ul>
                         </div>
                     </li>`
 
-});
+    });
 
-debtList.innerHTML = listMarkup;
-let accordionHeaders = debtList.querySelectorAll('.accordion-header');
+    debtList.innerHTML = listMarkup;
+    let accordionHeaders = debtList.querySelectorAll('.accordion-header');
 
-accordionHeaders.forEach((e) => {
-    e.addEventListener('click', (event) => {
-        e.parentNode.childNodes[3].classList.toggle("isActive");
-        e.childNodes[3].classList.toggle("fa-chevron-up");
+    accordionHeaders.forEach((e) => {
+        e.addEventListener('click', (event) => {
+            e.parentNode.childNodes[3].classList.toggle("isActive");
+            e.childNodes[3].classList.toggle("fa-chevron-up");
 
-    })
-});
+        })
+    });
+    console.timeEnd('Time of showHomeData');
 }
-
 ShowTheHomePageDebt();
+ShowTheDebts();
 
-//arrowy + redesign adding window
+
