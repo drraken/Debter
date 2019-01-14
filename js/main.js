@@ -240,7 +240,7 @@ function addSomeNewData(debtor_val, lender_val, amount_val, desc_val) {
         .then(response => {
             return response.json()
         });
-    setTimeout('window.location.reload();', 500);
+    setTimeout('window.location.reload();', 1000);
 }
 
 //<------HISTORY PAGE RENDERING------>
@@ -402,16 +402,19 @@ function showHomeData(data) {
             })
             .then(response => {
                 return response.json()
-            });
-
-        setTimeout('window.location.reload();', 500);
+                 
+            });        
+        setTimeout('window.location.reload();', 1000);
+         
     };
     buttonContainer.forEach((e) => {
         e.firstChild.addEventListener('click', (event) => {
+           
             clearSomeSection.classList.remove("is-close");
             let currentDebt = Number(e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML);
+            console.log(currentDebt);            
             let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();
-            submitSubstractPart.addEventListener('click', (event) => {
+            submitSubstractPart.addEventListener('click', (event) => {                 
                 loadingOverlay.classList.remove("is-close");
                 let amountOfSubstract = Number(document.getElementById('amountOfSubstract').value);
                 if (currentDebt > 0 && amountOfSubstract <= currentDebt && amountOfSubstract > 0) {
