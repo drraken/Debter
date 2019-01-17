@@ -118,6 +118,7 @@ let userPersonalizedBalance = [
     }]
 let containerMarkup = '';
 let historyMap = [];
+let keyValue = [];
 
 
 if (getKey == '123') {
@@ -167,7 +168,7 @@ submit_debt.addEventListener('click', (e) => {
     let desc = document.getElementById('description').value;
     if (getKey == '123' && amount > 0 && amount <= 500 && debtor != lendor) {
         addSomeNewData(debtor, lendor, amount, desc);
-        add_debt_page.classList.add('is-close');      
+        add_debt_page.classList.add('is-close');
     } else if (amount <= 0 || amount > 500) {
         errorMessageAddingSection.innerHTML = 'Amount must be between 1 and 500';
         loadingOverlay.classList.add("is-close");
@@ -181,12 +182,12 @@ submit_box.addEventListener('click', (e) => {
     loadingOverlay.classList.remove("is-close");
     let login = document.getElementById('login_box').value.toLowerCase();
     let password = document.getElementById('password_box').value;
-    CheckTheData(login, password);   
+    CheckTheData(login, password);
 })
 
 function jsUcfirst(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 //<---------LOGIN FUNCTIONS------------->
 function CheckTheData(l, p) {
     const url = "https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/users";
@@ -198,7 +199,7 @@ function CheckTheData(l, p) {
 function sendData(data, l, p) {
     let valid = false;
     data.forEach(element => {
-        if (element.Login == l && element.Password == p) {           
+        if (element.Login == l && element.Password == p) {
             valid = true;
             key_value = element.key;
             user_value = element.Login.toUpperCase();
@@ -206,7 +207,7 @@ function sendData(data, l, p) {
     })
     if (valid) {
         sessionStorage.setItem('key', key_value);
-        sessionStorage.setItem('user', user_value);        
+        sessionStorage.setItem('user', user_value);
         login_page.classList.add("is-close");
         header.classList.remove("is-close");
         footer.classList.remove('is-close');
@@ -214,7 +215,7 @@ function sendData(data, l, p) {
         debt_page.classList.remove('is-close');
         history_page.classList.remove('is-close');
         logged_user.innerHTML = user_value;
-        window.location.reload();       
+        window.location.reload();
     } else {
         loadingOverlay.classList.add('is-close');
         errorMessageLoginSection.innerHTML = 'Wrong login data! Please try again.';
@@ -222,13 +223,13 @@ function sendData(data, l, p) {
 }
 //<----------ADDING NEW DEBTS------------------>
 function addSomeNewData(debtor_val, lender_val, amount_val, desc_val) {
-    
+
     const Debt = {
         debtor: debtor_val,
         lender: lender_val,
         amount: amount_val,
         desc: desc_val,
-    }    
+    }
 
     fetch('https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myPostLambda', {
             method: 'POST',
@@ -238,12 +239,14 @@ function addSomeNewData(debtor_val, lender_val, amount_val, desc_val) {
             body: JSON.stringify(Debt)
         })
         .then(response => {
-            return response.json()
-        });
-    setTimeout('window.location.reload();', 1000);
+            return response.json()            
+        })
+        .then(() => window.location.reload())
+        
 }
 
 //<------HISTORY PAGE RENDERING------>
+
 function ShowTheDebts() {
     if (getKey == '123') {
         const url = "https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myHistoryLambda";
@@ -276,8 +279,8 @@ function showData(data) {
 
     containerMarkup += '</ul>';
     history_container.innerHTML = containerMarkup;
-     console.timeEnd('Time of HistoryPage');
-} 
+    console.timeEnd('Time of HistoryPage');
+}
 
 
 //<--------BOTTOM NAVIGATION-------->
@@ -313,13 +316,14 @@ function ShowTheHomePageDebt() {
         fetch(url)
             .then(response => response.json())
             .then(data => showHomeData(JSON.parse(data.query)));
-             console.timeEnd('Time of downloading data from db'); 
+        console.timeEnd('Time of downloading data from db');
     } else {
         home_page.innerHTML = "YOU ARE NOT ALLOWED TO SEE THIS CONTENT";
     }
 };
+
 function showHomeData(data) {
-    
+
     data.forEach((e) => {
         if (e.debtor == user.toLowerCase() && e.debtor != e.lender) {
             balance_amount -= e.amount;
@@ -348,7 +352,7 @@ function showHomeData(data) {
         message.innerHTML = "It looks like you are fine with debts..."
     }
     console.time("Loopole");
-    userPersonalizedBalance.forEach((d) => {        
+    userPersonalizedBalance.forEach((d) => {
         homeMap.forEach((h) => {
             if (h.lender == d.user) {
                 d.debts.forEach((x) => {
@@ -368,7 +372,7 @@ function showHomeData(data) {
     });
     console.timeEnd("Loopole");
     containerHomeMarkup = `<li>`;
-    const personalDebtList = document.querySelector('#personalDebtList');     
+    const personalDebtList = document.querySelector('#personalDebtList');
     userPersonalizedBalance.forEach((i) => {
         if (i.user == user.toLowerCase()) {
             i.debts.forEach((d) => {
@@ -381,7 +385,7 @@ function showHomeData(data) {
 
     containerHomeMarkup += '</li>';
     personalDebtList.innerHTML = containerHomeMarkup;
-    
+
     //<---------Clear buttons---------->
     let buttonContainer = personalDebtList.querySelectorAll('.button-container');
 
@@ -402,19 +406,20 @@ function showHomeData(data) {
             })
             .then(response => {
                 return response.json()
-                 
-            });        
-        setTimeout('window.location.reload();', 1000);
-         
+
+            })
+            .then(() => window.location.reload());
+
+
     };
     buttonContainer.forEach((e) => {
         e.firstChild.addEventListener('click', (event) => {
-           
+
             clearSomeSection.classList.remove("is-close");
             let currentDebt = Number(e.parentElement.childNodes[0].children[1].children[0].children[0].innerHTML);
-            console.log(currentDebt);            
+            console.log(currentDebt);
             let lender = e.parentElement.children[0].firstChild.innerHTML.toLowerCase();
-            submitSubstractPart.addEventListener('click', (event) => {                 
+            submitSubstractPart.addEventListener('click', (event) => {
                 loadingOverlay.classList.remove("is-close");
                 let amountOfSubstract = Number(document.getElementById('amountOfSubstract').value);
                 if (currentDebt > 0 && amountOfSubstract <= currentDebt && amountOfSubstract > 0) {
@@ -501,5 +506,29 @@ function showHomeData(data) {
 }
 ShowTheHomePageDebt();
 ShowTheDebts();
+/*let dataRowCount = 0;
+let dataRowTable = [];
 
+watchDbChanges(dataRowCount);
+function watchDbChanges() {
+    const url = "https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myCountFunction";
+    fetch(url)
+        .then(response => response.json())
+        .then(data => watchData(JSON.parse(data.query)))
+        .then(temp => console.log(dataRowCount));
+
+    function watchData(data) {
+        data.forEach((e) => {
+            if (dataRowCount == 0 || dataRowCount == e.rows) {
+                dataRowCount = e.rows; 
+                console.log(dataRowCount);
+            }
+            else{
+                console.log('not equal 0 and rows,some changes happend');
+                
+            }
+
+        })
+    };
+};*/
 
