@@ -395,9 +395,8 @@ function showHomeData(data) {
 
             })
             .then(() => window.location.reload());
-
-
     };
+    //<--------BUTTON CLEAR------>
     buttonContainer.forEach((e) => {
         e.firstChild.addEventListener('click', (event) => {
 
@@ -414,7 +413,11 @@ function showHomeData(data) {
                 } else if (currentDebt < 0 && amountOfSubstract <= -currentDebt && amountOfSubstract > 0) {
                     subtractDebt(user.toLowerCase(), lender, -amountOfSubstract, "Auto generated debt to subtract part of the debt");
                     clearSomeSection.classList.add("is-close");
-                } else {
+                } else if (amountOfSubstract == ''){
+                    amountOutOfRangeMessage.innerHTML = 'Amount field can not be empty.';
+                    loadingOverlay.classList.add("is-close");
+                }
+                else {
                     amountOutOfRangeMessage.innerHTML = 'Amount out of the current debt range';
                     loadingOverlay.classList.add("is-close");
                 }
@@ -422,7 +425,7 @@ function showHomeData(data) {
             });
         })
     });
-
+    //<--------BUTTON CLEAR ALL------>
     buttonContainer.forEach((e) => {
         e.lastChild.addEventListener('click', (event) => {
             loadingOverlay.classList.remove("is-close");
