@@ -120,7 +120,7 @@ let containerMarkup = '';
 let historyMap = [];
 
 
-if (getKey == '123') {
+if (getKey == '409296713') {
     login_page.classList.add("is-close");
     header.classList.remove("is-close");
     footer.classList.remove('is-close');
@@ -164,7 +164,7 @@ submit_debt.addEventListener('click', (e) => {
     let lendor = document.getElementById('lendor').value;
     let amount = document.getElementById('amount').value;
     let desc = document.getElementById('description').value;
-    if (getKey == '123' && amount > 0 && amount <= 500 && debtor != lendor) {
+    if (getKey == '409296713' && amount > 0 && amount <= 500 && debtor != lendor) {
         addSomeNewData(debtor, lendor, amount, desc);
         add_debt_page.classList.add('is-close');
     } else if (amount <= 0 || amount > 500) {
@@ -246,7 +246,7 @@ function addSomeNewData(debtor_val, lender_val, amount_val, desc_val) {
 //<------HISTORY PAGE RENDERING------>
 
 function ShowTheDebts() {
-    if (getKey == '123') {
+    if (getKey == '409296713') {
         const url = "https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myHistoryLambda";
         fetch(url)
             .then(response => response.json())
@@ -303,7 +303,7 @@ function changeNavigationState(links, activeIndex) {
 
 //<------------HOME PAGE RENDERING----------->
 function ShowTheHomePageDebt() {
-    if (getKey == '123') {
+    if (getKey == '409296713') {
         const url = " https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/transactionHistory";
         fetch(url)
             .then(response => response.json())
