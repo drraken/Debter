@@ -118,7 +118,6 @@ let userPersonalizedBalance = [
     }]
 let containerMarkup = '';
 let historyMap = [];
-let keyValue = [];
 
 
 if (getKey == '123') {
@@ -159,7 +158,6 @@ exitClearSome.addEventListener('click', (e) => {
 
 });
 submit_debt.addEventListener('click', (e) => {
-    console.time('Submit debt time');
     e.preventDefault();
     loadingOverlay.classList.remove("is-close");
     let debtor = document.getElementById('debtor').value;
@@ -215,7 +213,7 @@ function sendData(data, l, p) {
         debt_page.classList.remove('is-close');
         history_page.classList.remove('is-close');
         logged_user.innerHTML = user_value;
-        window.location.reload();
+        window.location.reload()
     } else {
         loadingOverlay.classList.add('is-close');
         errorMessageLoginSection.innerHTML = 'Wrong login data! Please try again.';
@@ -239,10 +237,10 @@ function addSomeNewData(debtor_val, lender_val, amount_val, desc_val) {
             body: JSON.stringify(Debt)
         })
         .then(response => {
-            return response.json()            
+            return response.json()
         })
         .then(() => window.location.reload())
-        
+
 }
 
 //<------HISTORY PAGE RENDERING------>
@@ -259,7 +257,6 @@ function ShowTheDebts() {
 };
 
 function showData(data) {
-    console.time('Time of HistoryPage');
     data.forEach((e) => {
         let temp = {};
         temp.id = e.idTransaction;
@@ -279,7 +276,6 @@ function showData(data) {
 
     containerMarkup += '</ul>';
     history_container.innerHTML = containerMarkup;
-    console.timeEnd('Time of HistoryPage');
 }
 
 
@@ -303,20 +299,15 @@ function changeNavigationState(links, activeIndex) {
             pages[index].classList.remove('is-active');
         }
     });
-}
-
-
+};
 
 //<------------HOME PAGE RENDERING----------->
 function ShowTheHomePageDebt() {
-    console.time('Time of showHomeData');
-    console.time('Time of downloading data from db');
     if (getKey == '123') {
         const url = " https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/transactionHistory";
         fetch(url)
             .then(response => response.json())
             .then(data => showHomeData(JSON.parse(data.query)));
-        console.timeEnd('Time of downloading data from db');
     } else {
         home_page.innerHTML = "YOU ARE NOT ALLOWED TO SEE THIS CONTENT";
     }
@@ -351,7 +342,6 @@ function showHomeData(data) {
     if (lastRowOfBalanceMap.balance_amount == 0) {
         message.innerHTML = "It looks like you are fine with debts..."
     }
-    console.time("Loopole");
     userPersonalizedBalance.forEach((d) => {
         homeMap.forEach((h) => {
             if (h.lender == d.user) {
@@ -368,9 +358,7 @@ function showHomeData(data) {
                 })
             }
         })
-
     });
-    console.timeEnd("Loopole");
     containerHomeMarkup = `<li>`;
     const personalDebtList = document.querySelector('#personalDebtList');
     userPersonalizedBalance.forEach((i) => {
@@ -378,9 +366,7 @@ function showHomeData(data) {
             i.debts.forEach((d) => {
                 containerHomeMarkup += `<div class='SingleBlockDebtContainer'><div class = 'user-container'><h2>${jsUcfirst(d.name)}</h2><p class='balance'><span><strong>${d.amount}</strong>zł</span></p> </div><div class='button-container'><a class="button">Clear</a><a class="buttonAll">Clear All</a></div></div>`;
             })
-
         }
-
     });
 
     containerHomeMarkup += '</li>';
@@ -502,33 +488,6 @@ function showHomeData(data) {
 
         })
     });
-    console.timeEnd('Time of showHomeData');
-}
+};
 ShowTheHomePageDebt();
 ShowTheDebts();
-/*let dataRowCount = 0;
-let dataRowTable = [];
-
-watchDbChanges(dataRowCount);
-function watchDbChanges() {
-    const url = "https://7kkvlvmf39.execute-api.eu-central-1.amazonaws.com/development/myCountFunction";
-    fetch(url)
-        .then(response => response.json())
-        .then(data => watchData(JSON.parse(data.query)))
-        .then(temp => console.log(dataRowCount));
-
-    function watchData(data) {
-        data.forEach((e) => {
-            if (dataRowCount == 0 || dataRowCount == e.rows) {
-                dataRowCount = e.rows; 
-                console.log(dataRowCount);
-            }
-            else{
-                console.log('not equal 0 and rows,some changes happend');
-                
-            }
-
-        })
-    };
-};*/
-

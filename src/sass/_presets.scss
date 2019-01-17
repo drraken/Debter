@@ -102,12 +102,6 @@ body {
             color: $primaryColor;
 
         }
-        i{                              
-                color: white;  
-            position: absolute;
-            right: 40px;
-            margin-top: 41px;
-        }
         select {
             -webkit-appearance: none;
             display: block;
@@ -118,7 +112,14 @@ body {
             border: none;
             color: white;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-            background: $primaryColor;
+            //background: $primaryColor;
+            cursor: pointer;
+            background: url("../img/white-down-arrow.png") no-repeat right $primaryColor;
+            background-size: 25px;
+            padding-right:10px;
+            background-position-x: 240px;
+            background-position-y: 10px;
+            
 
             option {
                 color: white;

@@ -64,11 +64,6 @@ body {
     .form-class form span {
       float: inherit;
       color: #212121; }
-    .form-class form i {
-      color: white;
-      position: absolute;
-      right: 40px;
-      margin-top: 41px; }
     .form-class form select {
       -webkit-appearance: none;
       display: block;
@@ -79,7 +74,12 @@ body {
       border: none;
       color: white;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-      background: #212121; }
+      cursor: pointer;
+      background: url("../img/white-down-arrow.png") no-repeat right #212121;
+      background-size: 25px;
+      padding-right: 10px;
+      background-position-x: 240px;
+      background-position-y: 10px; }
       .form-class form select option {
         color: white; }
     .form-class form input {
@@ -275,7 +275,8 @@ footer nav {
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        padding: 0 1rem; }
+        padding: 0 1rem;
+        cursor: pointer; }
       #debt-page ul li .accordion-content {
         width: 100%;
         border-top: 1px solid #ccc;
